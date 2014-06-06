@@ -29,8 +29,8 @@ bool isInvalid(const Forest &f) {
 }
 
 ostream &operator<<(ostream &os, const Forest &f) {
-  os << "{ goats: " << f.goats << ", wolves: " << f.wolves << ", lions: " << f.lions << " }";
-  return os;
+  return os << "{ goats: " << f.goats << ", wolves: " << f.wolves
+            << ", lions: " << f.lions << " }";
 }
 
 vector<Forest> mutate(const vector<Forest>& xs) {
