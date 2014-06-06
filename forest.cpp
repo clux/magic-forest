@@ -19,16 +19,20 @@ struct Forest {
 	int wolves;
 	int lions;
 };
+
 bool isStable(const Forest &f) {
 	return (!f.goats && (!f.wolves || !f.lions)) || (!f.wolves && !f.lions);
 }
+
 bool isInvalid(const Forest &f) {
 	return (f.goats < 0 || f.wolves < 0 || f.lions < 0);
 }
+
 ostream &operator<<(ostream &os, const Forest &f) {
 	os << "{ goats: " << f.goats << ", wolves: " << f.wolves << ", lions: " << f.lions << " }";
 	return os;
 }
+
 vector<Forest> mutate(const vector<Forest>& xs) {
 	vector<Forest> next;
 	next.reserve(xs.size() * 3);

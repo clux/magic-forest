@@ -17,8 +17,8 @@ $ clang++ -O3 -std=c++11 forest.cpp -o forest
 Nice thing about this problem:
 
 - not easily parallelizable 
-- but easy algorithm to port to other languages
-- easy to get it to how you would use the language
+- easy algorithm to port to other languages
+- easy to shape to how you would use it in the other language
 - reference implementations in many languages available
 
 All files in here are based on resources from [the original post](http://unriskinsight.blogspot.co.uk/2014/06/fast-functional-goats-lions-and-wolves.html).
