@@ -1,6 +1,3 @@
-// clang++ -O3 -std=c++11 forest.cpp -o forest
-// ./forest 305 295 300
-
 #include <algorithm>
 #include <functional>
 #include <iostream>

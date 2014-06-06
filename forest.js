@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-// ./forest.js 305 295 300
 
 function Forest(goats, wolves, lions) {
   this.goats = goats;
