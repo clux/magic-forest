@@ -1,8 +1,15 @@
 # Magic Forest Benchmarks
 Because benchmarking languages is only useful if you know how you would use the languages you are comparing.
 
+# Implementation
+Only the brute forcing solution is used for all languages.
+
+- Build up the entire tree mutation by mutation from the initial forest
+- In mutation step, create all possible variations, then filter out invalids, then sort and remove duplicates
+- Continue doing mutation steps until a stable solution is found
+
 ## Usage
-Only tests JavaScript and C++11 at the moment as these are the languages I use frequently.
+Only tests JavaScript and C++11 atm:
 
 ```js
 $ ./forest 305 295 300
@@ -16,7 +23,7 @@ $ clang++ -O3 -std=c++11 forest.cpp -o forest
 ## Goal
 Nice thing about this problem:
 
-- not easily parallelizable 
+- not easily parallelizable (when restricting yourself to the brute force solution)
 - easy algorithm to port to other languages
 - easy to shape to how you would use it in the other language
 - reference implementations in many languages available
