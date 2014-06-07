@@ -29,7 +29,8 @@ bool isInvalid(const Forest &f) {
 }
 
 ostream &operator<<(ostream &os, const Forest &f) {
-  return os << "{ goats: " << f.goats << ", wolves: " << f.wolves
+  return os << "{ goats: " << f.goats
+            << ", wolves: " << f.wolves
             << ", lions: " << f.lions << " }";
 }
 
