@@ -31,7 +31,7 @@ var mutate = function (forests) {
   }, []).filter(isValid).sort(order).filter(notFirstOrPrevious);
 };
 
-var findStableForests = function (forest) {
+var solve = function (forest) {
   var forests = [forest];
   while (forests.length && !forests.some(isStable)) {
     forests = mutate(forests);
@@ -40,13 +40,13 @@ var findStableForests = function (forest) {
 };
 
 if (module === require.main) {
-  var args = process.argv.slice(2);
-  if (args.length !== 3 || args.some(isNaN)) {
-    return console.log('USAGE: node magicForest.js <goats> <wolves> <lions>');
+  var args = process.argv.slice(2).map(Number);
+  if (args.length !== 3 || args.some(Number.isNaN)) {
+    return console.log('USAGE: ' + args[1] + ' <goats> <wolves> <lions>');
   }
   console.time('Time');
-  var initial = new Forest(args[0] | 0, args[1] | 0, args[2] | 0);
-  findStableForests(initial).forEach(function (f) {
+  var initial = new Forest(args[0], args[1], args[2]);
+  solve(initial).forEach(function (f) {
     console.log('Solution:', f);
   });
   console.timeEnd('Time');

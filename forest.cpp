@@ -20,11 +20,11 @@ struct Forest {
   int lions;
 };
 
-bool isStable(const Forest &f) {
+bool is_stable(const Forest &f) {
   return (!f.goats && (!f.wolves || !f.lions)) || (!f.wolves && !f.lions);
 }
 
-bool isInvalid(const Forest &f) {
+bool is_invalid(const Forest &f) {
   return (f.goats < 0 || f.wolves < 0 || f.lions < 0);
 }
 
@@ -45,25 +45,25 @@ vector<Forest> mutate(const vector<Forest>& xs) {
   }   
   
   // filter out invalid forests
-  auto valid_end = remove_if(begin(next), end(next), isInvalid);    
+  auto valid_end = remove_if(begin(next), end(next), is_invalid);    
   // delete duplicates
   stable_sort(begin(next), valid_end);
   next.erase(unique(begin(next), valid_end), end(next));
   return next;
 }
 
-vector<Forest> stable_forests(const vector<Forest>& forests) {
+vector<Forest> find_stable(const vector<Forest>& forests) {
   vector<Forest> xs;
-  copy_if(begin(forests), end(forests), back_inserter(xs), isStable);
+  copy_if(begin(forests), end(forests), back_inserter(xs), is_stable);
   return xs;
 }
 
-vector<Forest> find_stable_forests(const Forest& forest) {
+vector<Forest> solve(const Forest& forest) {
   vector<Forest> forests = { forest };
-  while (!forests.empty() && none_of(begin(forests), end(forests), isStable)) {
+  while (!forests.empty() && none_of(begin(forests), end(forests), is_stable)) {
     forests = mutate(forests);
   }
-  return stable_forests(forests);
+  return find_stable(forests);
 }
 
 int main(int argc, char* argv[]) {
@@ -73,6 +73,6 @@ int main(int argc, char* argv[]) {
   }
   clock_t t = clock();
   Forest initial{stoi(argv[1]), stoi(argv[2]), stoi(argv[3])};
-  for (auto f: find_stable_forests(initial)) cout << "Solution: " << f << endl;
+  for (auto f: solve(initial)) cout << "Solution: " << f << endl;
   cout << (static_cast<double>(clock() - t))*1000/CLOCKS_PER_SEC << "ms" << endl;
 }
