@@ -34,14 +34,14 @@ ostream &operator<<(ostream &os, const Forest &f) {
             << ", lions: " << f.lions << " }";
 }
 
-vector<Forest> mutate(const vector<Forest>& xs) {
+vector<Forest> mutate(const vector<Forest> &curr) {
   vector<Forest> next;
-  next.reserve(xs.size() * 3);
+  next.reserve(curr.size() * 3);
   
-  for (auto f : xs) {
-    next.emplace_back(f.goats - 1, f.wolves - 1, f.lions + 1); // wolfDevoursGoat
-    next.emplace_back(f.goats - 1, f.wolves + 1, f.lions - 1); // lionDevoursGoat
-    next.emplace_back(f.goats + 1, f.wolves - 1, f.lions - 1); // lionDevoursWolf
+  for (auto f : curr) {
+    next.emplace_back(f.goats - 1, f.wolves - 1, f.lions + 1);
+    next.emplace_back(f.goats - 1, f.wolves + 1, f.lions - 1);
+    next.emplace_back(f.goats + 1, f.wolves - 1, f.lions - 1);
   }   
   
   // filter out invalid forests
@@ -52,21 +52,17 @@ vector<Forest> mutate(const vector<Forest>& xs) {
   return next;
 }
 
-vector<Forest> find_stable(const vector<Forest>& forests) {
-  vector<Forest> xs;
-  copy_if(begin(forests), end(forests), back_inserter(xs), is_stable);
-  return xs;
-}
-
-vector<Forest> solve(const Forest& forest) {
-  vector<Forest> forests = { forest };
-  while (!forests.empty() && none_of(begin(forests), end(forests), is_stable)) {
-    forests = mutate(forests);
+vector<Forest> solve(const Forest &x) {
+  vector<Forest> xs = { x };
+  while (!xs.empty() && none_of(begin(xs), end(xs), is_stable)) {
+    xs = mutate(xs);
   }
-  return find_stable(forests);
+  vector<Forest> stable;
+  copy_if(begin(xs), end(xs), back_inserter(stable), is_stable);
+  return stable;
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   if (argc != 4) {
     cerr << "USAGE: " << argv[0] << " <goats> <wolves> <lions>" << endl;
     exit(EXIT_FAILURE);
