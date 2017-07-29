@@ -1,6 +1,6 @@
 use std::process;
 
-#[derive(PartialEq, Eq, PartialOrd, Ord, Debug)]
+#[derive(Clone, PartialEq, Eq, PartialOrd, Ord, Debug)]
 struct Forest {
     goats : i32,
     wolves : i32,
