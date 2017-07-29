@@ -58,7 +58,7 @@ Modern cpp solution is very readable at only a few more lines than the scripting
 Rust outperforming C++ was unexpected, but it all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance. It's also the only language herein that was able to derive all the obvious implementations of equality, comparison and print representation.
 
 Some rust extra notes:
-- using cargo build --release with the same file as main had no change in performance despite more flags sent to rustc by cargo
+- using `cargo build --release` with the same file as `main.rs` had no change in performance despite more flags sent to `rustc` by cargo - chose to use `rustc` directly just for folder structure because of this
 - missing release optimizations are 3-8 times slower (depending on whether you use cargo debug builds or rustc without any flags)
 - a more cpp style `is_valid` function without pattern matching in rust made no noticeable performance increase, and the pattern matching feels more reabable despite being longer
 - using a `::new` wrapper in `mutate` gave an extremely insignificant performance hit, and looks nicer
