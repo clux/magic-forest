@@ -18,19 +18,26 @@ To verify you are actually doing all the work, print every element in the array/
 ```bash
 # node
 time ./forest.js 305 295 300
+
 # c++14 (gcc)
 g++ -O3 -std=c++14 forest.cpp -o cppforest
 time ./cppforest 305 295 300
-# rust (1.19 stable with default release optimizations)
+# c++14 (llvm)
+clang++ -O3 -std=c++14 forest.cpp -o cppforestllvm
+time ./cppforestllvm 305 295 300
+
+# rust (default release optimizations)
 (cd rust && cargo build --release)
 time ./rust/target/release/forest 305 295 300
 ```
 
-## Notes
-All files in here are based on resources from [the original post](http://unriskinsight.blogspot.co.uk/2014/06/fast-functional-goats-lions-and-wolves.html), but rewritten to be nice looking.
-
-TL;DR benchmarks results.
+## Personal Results
+Last tested July 2017
 
 - rust 1.19 (stable) is roughly 40 times faster than node 6.11
 - rust 1.19 (stable) is roughly 5% faster than c++14 with gcc 7
 - c++14 with gcc 7 is roughly 10% faster than c++14 with llvm 4
+- c++14 had no noticable performance change from c++11
+
+## Notes
+All files in here are based on resources from [the original post](http://unriskinsight.blogspot.co.uk/2014/06/fast-functional-goats-lions-and-wolves.html), but rewritten to be nice looking.
