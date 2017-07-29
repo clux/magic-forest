@@ -1,5 +1,5 @@
 # Magic Forest Benchmarks
-Personal comparisons of languages based on how I would use them.
+Personal comparisons of languages based on what I consider idiomatic use of these languages.
 
 # Implementation
 Only the brute forcing solution is used for all languages.
@@ -8,16 +8,16 @@ Only the brute forcing solution is used for all languages.
 - In mutation step, create all possible variations, then filter out invalids, then sort and remove duplicates
 - Continue doing mutation steps until a stable solution is found
 
-No analytical solutions, or optimized search paths will be employed.
+No analytical solutions, nor optimized search paths will be employed.
 
 ## Usage
 
 ```bash
 # javascript
-$ ./forest 305 295 300
-# c++11
-$ clang++ -O3 -std=c++11 forest.cpp -o forest
-./forest 305 295 300
+$ ./forest.js 305 295 300
+# c++14
+$ clang++ -O3 -std=c++14 forest.cpp -o cppforest
+./cppforest 305 295 300
 ```
 
 ## Notes
@@ -27,4 +27,4 @@ TL;DR benchmarks results.
 
 - C++ rewrite is just as fast as original.
 - JS rewrite is just a lot shorter and slightly faster.
-- C++ version is roughly 14 times faster than the JS version.
+- C++ version is roughly 34 times faster than the JS version.
