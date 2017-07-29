@@ -33,9 +33,9 @@ time ./cppforest 305 295 300
 clang++ -O3 -std=c++14 forest.cpp -o cppforestllvm
 time ./cppforestllvm 305 295 300
 
-# rust (default release optimizations)
-(cd rust && cargo build --release)
-time ./rust/target/release/forest 305 295 300
+# rust
+rustc -C opt-level=3 forest.rs
+time ./forest 305 295 300
 ```
 
 ## Personal Results
@@ -55,10 +55,11 @@ Node runs the same task as python in almost half the time despite having to impl
 
 Modern cpp solution is very readable at only a few more lines than the scripting language counterparts. A bit of mental overhead on emplace, awkward iterator sempantics with back inserters, but even that is pretty standard modern cpp really. There's a more standalone function approach here than rust due to not having traits, and also that passing member functions can look awkward in long `<algorithm>` instructions.
 
-Rust outperforming C++ was unexpected, but it all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance. I chose to go through cargo to get default release optimizations in a stable environment and to clarify that this is a very standard and idiomatic solution without specific flags. It's also the only language herein that was able to derive all the obvious implementations of equality, comparison and print representation.
+Rust outperforming C++ was unexpected, but it all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance. It's also the only language herein that was able to derive all the obvious implementations of equality, comparison and print representation.
 
 Some rust extra notes:
-- debug builds (i.e. no --release or -O3) are three times slower
+- using cargo build --release with the same file as main had no change in performance despite more flags sent to rustc by cargo
+- missing release optimizations are 3-8 times slower (depending on whether you use cargo debug builds or rustc without any flags)
 - a more cpp style `is_valid` function without pattern matching in rust made no noticeable performance increase, and the pattern matching feels more reabable despite being longer
 - using a `::new` wrapper in `mutate` gave an extremely insignificant performance hit, and looks nicer
 - arg parsing without a library was awkwardly unwrappy - would not recommend `std::env:args` (knocked it down from the cleanest to read language implementation)
