@@ -25,7 +25,7 @@ bool is_stable(const Forest &f) {
 }
 
 bool is_invalid(const Forest &f) {
-  return (f.goats < 0 || f.wolves < 0 || f.lions < 0);
+  return f.goats < 0 || f.wolves < 0 || f.lions < 0;
 }
 
 ostream &operator<<(ostream &os, const Forest &f) {
