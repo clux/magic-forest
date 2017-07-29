@@ -9,6 +9,8 @@ Only the brute forcing solution is used for all languages.
 - Build up the entire tree mutation by mutation from the initial forest
 - In mutation step, create all possible variations, then filter out invalids, then sort and remove duplicates
 - Continue doing mutation steps until a stable solution is found
+- No third party libraries
+- Language idiomatic solution (no obscure/largely expanding optimizations - what would your colleague write?)
 
 No analytical solutions, nor optimized search paths will be employed. Perform the sanity check below:
 
