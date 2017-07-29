@@ -67,6 +67,11 @@ int main(int argc, char *argv[]) {
     cerr << "USAGE: " << argv[0] << " <goats> <wolves> <lions>" << endl;
     exit(EXIT_FAILURE);
   }
+
   Forest initial{stoi(argv[1]), stoi(argv[2]), stoi(argv[3])};
-  for (auto f: solve(initial)) cout << "Solution: " << f << endl;
+  cout << "Initial: " << initial << endl;
+
+  for (auto f: solve(initial)) {
+    cout << "Solution: " << f << endl;
+  }
 }

@@ -46,6 +46,7 @@ if (module === require.main) {
   }
 
   var initial = new Forest(args[0], args[1], args[2]);
+  console.log('Initial:', initial);
   solve(initial).forEach(function (f) {
     console.log('Solution:', f);
   });
