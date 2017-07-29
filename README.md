@@ -10,6 +10,9 @@ Only the brute forcing solution is used for all languages.
 
 No analytical solutions, nor optimized search paths will be employed.
 
+# Sanity
+To verify you are actually doing all the work, print every element in the array/vector in `mutate` before returning it (i.e. after sort + dedup steps). With the standard `305 295 300` input, there should be an extra `4810614` extra lines of output.
+
 ## Usage
 
 ```bash
@@ -18,6 +21,9 @@ time ./forest.js 305 295 300
 # c++14 (gcc)
 g++ -O3 -std=c++14 forest.cpp -o cppforest
 time ./cppforest 305 295 300
+# rust (1.19 stable with default release optimizations)
+(cd rust && cargo build --release)
+time ./rust/target/release/forest 305 295 300
 ```
 
 ## Notes
@@ -25,5 +31,6 @@ All files in here are based on resources from [the original post](http://unriski
 
 TL;DR benchmarks results.
 
-- c++14 with gcc 7 is is roughly 38 times faster than node 6.11
+- rust 1.19 (stable) is roughly 40 times faster than node 6.11
+- rust 1.19 (stable) is roughly 5% faster than c++14 with gcc 7
 - c++14 with gcc 7 is roughly 10% faster than c++14 with llvm 4
