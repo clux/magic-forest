@@ -44,7 +44,6 @@ if (module === require.main) {
   if (args.length !== 3 || args.some(Number.isNaN)) {
     return console.log('USAGE: ' + args[1] + ' <goats> <wolves> <lions>');
   }
-
   var initial = new Forest(args[0], args[1], args[2]);
   console.log('Initial:', initial);
   solve(initial).forEach(function (f) {

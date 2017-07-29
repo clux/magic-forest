@@ -7,14 +7,17 @@ using namespace std;
 
 struct Forest {
   Forest(int g, int w, int l) : goats{g}, wolves{w}, lions{l} {}
+
   bool operator<(const Forest& rhs) const {
     if (goats != rhs.goats) return goats < rhs.goats;
     if (wolves != rhs.wolves) return wolves < rhs.wolves;
     return lions < rhs.lions;
   }
+
   bool operator==(const Forest& rhs) const {
     return (goats == rhs.goats) && (wolves == rhs.wolves) && (lions == rhs.lions);
   }
+
   int goats;
   int wolves;
   int lions;
@@ -37,16 +40,12 @@ ostream &operator<<(ostream &os, const Forest &f) {
 vector<Forest> mutate(const vector<Forest> &curr) {
   vector<Forest> next;
   next.reserve(curr.size() * 3);
-
   for (auto f : curr) {
     next.emplace_back(f.goats - 1, f.wolves - 1, f.lions + 1);
     next.emplace_back(f.goats - 1, f.wolves + 1, f.lions - 1);
     next.emplace_back(f.goats + 1, f.wolves - 1, f.lions - 1);
   }
-
-  // filter out invalid forests
   auto valid_end = remove_if(begin(next), end(next), is_invalid);
-  // delete duplicates
   stable_sort(begin(next), valid_end);
   next.erase(unique(begin(next), valid_end), end(next));
   return next;
@@ -67,10 +66,8 @@ int main(int argc, char *argv[]) {
     cerr << "USAGE: " << argv[0] << " <goats> <wolves> <lions>" << endl;
     exit(EXIT_FAILURE);
   }
-
   Forest initial{stoi(argv[1]), stoi(argv[2]), stoi(argv[3])};
   cout << "Initial: " << initial << endl;
-
   for (auto f: solve(initial)) {
     cout << "Solution: " << f << endl;
   }

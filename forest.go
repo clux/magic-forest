@@ -27,12 +27,10 @@ func mutate(forests []Forest) []Forest {
   next := make([]Forest, 0, len(forests) * 3)
   m := make(map[Forest]struct{})
   for _, v := range forests {
-    // we deduplicate here by using keys (slightly earlier than other languages)
     m[Forest{v.goats-1, v.wolves-1, v.lions+1}] = struct{}{}
     m[Forest{v.goats-1, v.wolves+1, v.lions-1}] = struct{}{}
     m[Forest{v.goats+1, v.wolves-1, v.lions-1}] = struct{}{}
   }
-  // remove invalids and reconvert to an array
   for k := range m {
     if !k.forestInvalid() {
       next = append(next, k)
