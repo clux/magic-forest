@@ -44,7 +44,7 @@ time ./forest 305 295 300
 ```
 
 ## Personal Results
-Last tested 29th July 2017, using latest packages in Arch: stable rust (1.19), python 3, node 6 LTS, go 1.8, c++ with both llvm4 and gcc7.
+Last tested 29th July 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3, node 6 LTS, go 1.8, c++ with both llvm4 and gcc7.
 
 - rust is roughly 70 times faster than python
 - rust is roughly 40 times faster than node
@@ -57,7 +57,7 @@ Last tested 29th July 2017, using latest packages in Arch: stable rust (1.19), p
 ### Comments
 Python probably suffers the most given its lack of an inplace sort/dedup combo (as far as I can tell). There's also appears to be no nice way to size the lists without the `[None] *x` hacks that makes everything ugly. Current solution is probably the cleanest one to read though (if you can ignore the weird semantics of `list(set(comprehension)))`).
 
-Node runs the same task as python in almost half the time despite having to implement it's own filter for removing duplicate ordered elements. It's also a clean functional solution. Historically native loops have been faster than stuff like `reduce`, but we're not going back to those days (so have not tested further).
+Node runs the same task as python in almost half the time despite having to implement it's own filter for removing duplicate ordered elements. It's also a clean functional solution. Historically native loops have been faster than stuff like `reduce`, but on node 6, using `forEach` with a correctly sized `new Array(3*forests.length)` as a starting point in `mutate` turned out to be quite detrimental to performance (14->18s).
 
 Go version feels very much like python. Same type of hack to sort and deduplicate an array, but using a map with throwaway values instead to force it out of key uniqueness. It's probably not super optimal, but then it's also kind of cheating by deduplicating earlier than all other languages (in the creation phase). Not sure if abusing comparables like this is a common practice, but all other googled solutions for this were too large to consider. The explicit filters functions having to be inlined everywhere makes this solution the ugliest one of them all. It's vastly faster than any of the scripting languages though.
 
