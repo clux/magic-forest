@@ -55,7 +55,7 @@ Last tested 29th July 2017 on an i7 7700K, using latest packages in Arch: stable
 - python2 is roughly 5% faster than python3
 
 ### Comments
-Python probably suffers the most given its lack of an inplace sort/dedup combo (as far as I can tell). There's also appears to be no nice way to size the lists without the `[None] *x` hacks that makes everything ugly. Current solution is probably the cleanest one to read though (if you can ignore the weird semantics of `list(set(comprehension)))`).
+Python probably suffers the most given its lack of an inplace sort/dedup combo (as far as I can tell). There's also appears to be no nice way to size the lists without the `[None] *x` hacks that makes everything ugly. Current solution is probably one of the cleanest one to read though (if you can ignore the weird semantics of `list(set(comprehension)))`).
 
 Node runs the same task as python in almost half the time despite having to implement it's own filter for removing duplicate ordered elements. It's also a clean functional solution. Historically native loops have been faster than stuff like `reduce`, but on node 6, using `forEach` with a correctly sized `new Array(3*forests.length)` as a starting point in `mutate` turned out to be quite detrimental to performance (14->18s).
 
@@ -63,7 +63,7 @@ Go version feels very much like python. Same type of hack to sort and deduplicat
 
 Modern cpp solution is very readable at only a few more lines than the scripting language counterparts. A bit of mental overhead on emplace, awkward iterator sempantics with back inserters, but even that is pretty standard modern cpp really. There's a more standalone function approach here than rust due to not having traits, and also that passing member functions can look awkward in long `<algorithm>` instructions.
 
-Rust outperforming C++ was unexpected, but it all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance.
+Rust outperforming C++ was unexpected, but it all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance. Personally, this feels like one of the cleanest and least magic implementations of the bunch.
 
 Go and Rust were the only two languages to automatically derive the obvious implementations of equality, comparison and print representation.
 
@@ -73,4 +73,3 @@ Some rust extra notes:
 - missing release optimizations are 3-8 times slower (depending on whether you use cargo debug builds or rustc without any flags)
 - a more cpp style `is_valid` function without pattern matching in rust made no noticeable performance increase, and the pattern matching feels more reabable despite being longer
 - using a `::new` wrapper in `mutate` gave an extremely insignificant performance hit, and looks nicer
-- arg parsing without a library was awkwardly unwrappy - would not recommend `std::env:args` (knocked it down from the cleanest to read language implementation)

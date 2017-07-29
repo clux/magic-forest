@@ -1,5 +1,3 @@
-use std::process;
-
 #[derive(Clone, PartialEq, Eq, PartialOrd, Ord, Debug)]
 struct Forest {
     goats : i32,
@@ -27,7 +25,7 @@ impl Forest {
 }
 
 fn mutate(forests: Vec<Forest>) -> Vec<Forest> {
-    let mut next: Vec<Forest> = Vec::with_capacity(forests.len()*3);
+    let mut next = Vec::with_capacity(forests.len()*3);
     for x in forests.into_iter() {
         next.push(Forest::new(x.goats - 1, x.wolves - 1, x.lions + 1));
         next.push(Forest::new(x.goats - 1, x.wolves + 1, x.lions - 1));
@@ -42,8 +40,7 @@ fn mutate(forests: Vec<Forest>) -> Vec<Forest> {
 }
 
 fn solve(forest: Forest) -> Vec<Forest> {
-    let mut xs: Vec<Forest> = vec![];
-    xs.push(forest);
+    let mut xs = vec![forest];
     while !xs.is_empty() && !xs.iter().any(|x| x.is_stable()) {
         xs = mutate(xs)
     }
@@ -52,16 +49,14 @@ fn solve(forest: Forest) -> Vec<Forest> {
 }
 
 fn main(){
-    let mut args = std::env::args();
+    let args : Vec<String> = std::env::args().collect();
     if args.len() != 4 {
         println!("USAGE: forest <goats> <wolves> <lions>");
-        process::exit(1);
+        std::process::exit(1);
     }
-    // don't want a proper arg parser right now:
-    args.next();
-    let goats : i32 = args.next().unwrap().parse().unwrap();
-    let wolves : i32 = args.next().unwrap().parse().unwrap();
-    let lions : i32 = args.next().unwrap().parse().unwrap();
+    let goats : i32 = args[1].parse().unwrap();
+    let wolves : i32 = args[2].parse().unwrap();
+    let lions : i32 = args[3].parse().unwrap();
 
     let initial = Forest { goats, wolves, lions};
     println!("Initial: {:?}", initial);
