@@ -20,11 +20,15 @@ To verify you are actually doing all the work, print every element in the array/
 ## Usage
 
 ```bash
+# python
+time ./forest.py 305 295 300
+
 # node
 time ./forest.js 305 295 300
 
-# python
-time ./forest.py 305 295 300
+# go
+go build forest.go
+time ./forest 305 295 300
 
 # c++ (gcc)
 g++ -O3 -std=c++14 forest.cpp -o cppforest
@@ -36,10 +40,6 @@ time ./cppforestllvm 305 295 300
 
 # rust
 rustc -C opt-level=3 forest.rs
-time ./forest 305 295 300
-
-# go
-go build forest.go
 time ./forest 305 295 300
 ```
 
@@ -59,7 +59,7 @@ Python probably suffers the most given its lack of an inplace sort/dedup combo (
 
 Node runs the same task as python in almost half the time despite having to implement it's own filter for removing duplicate ordered elements. It's also a clean functional solution. Historically native loops have been faster than stuff like `reduce`, but we're not going back to those days (so have not tested further).
 
-Go version feels very much like python. Same type of hack to sort and deduplicate an array, but using a map with throwaway values instead. Seems to generate sensible comparators and notions of equality from this which at least is nice. The explicit filters functions having to be inlined everywhere makes this solution the ugliest of them all. It's vastly faster than any of the scripting languages at least.
+Go version feels very much like python. Same type of hack to sort and deduplicate an array, but using a map with throwaway values instead to force it out of key uniqueness. Seems to generate sensible comparators and notions of equality automatically (perhaps a hash type thing) which at least is nice. The explicit filters functions having to be inlined everywhere makes this solution the ugliest of them all. It's vastly faster than any of the scripting languages though.
 
 Modern cpp solution is very readable at only a few more lines than the scripting language counterparts. A bit of mental overhead on emplace, awkward iterator sempantics with back inserters, but even that is pretty standard modern cpp really. There's a more standalone function approach here than rust due to not having traits, and also that passing member functions can look awkward in long `<algorithm>` instructions.
 
