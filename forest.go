@@ -51,13 +51,13 @@ func noStableForests(forests []Forest) bool {
 }
 
 func solve(forest Forest) []Forest {
-  xs := make([]Forest, 0, 3)
+  xs := make([]Forest, 0)
   xs = append(xs, forest)
   for len(xs) > 0 && noStableForests(xs) {
     xs = mutate(xs)
   }
   // return the stable remains
-  stable := make([]Forest, 0, len(xs)*3)
+  stable := make([]Forest, 0)
   for _, x := range xs {
     if x.forestStable() {
       stable = append(stable, x)

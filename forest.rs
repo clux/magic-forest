@@ -42,7 +42,7 @@ fn mutate(forests: Vec<Forest>) -> Vec<Forest> {
 }
 
 fn solve(forest: Forest) -> Vec<Forest> {
-    let mut xs: Vec<Forest> = Vec::with_capacity(1);
+    let mut xs: Vec<Forest> = vec![];
     xs.push(forest);
     while !xs.is_empty() && !xs.iter().any(|x| x.is_stable()) {
         xs = mutate(xs)
