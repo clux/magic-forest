@@ -1,16 +1,18 @@
 # Magic Forest Benchmarks
 Personal comparisons of languages based on what I consider idiomatic use of these languages.
 
-# Implementation
+This is based on the old blog post [Fast Functional Goats, Lions and Wolves](http://unriskinsight.blogspot.co.uk/2014/06/fast-functional-goats-lions-and-wolves.html) which gathered some publicity in 2014, but was broken by people finding an analytical solution.
+
+## Rules
 Only the brute forcing solution is used for all languages.
 
 - Build up the entire tree mutation by mutation from the initial forest
 - In mutation step, create all possible variations, then filter out invalids, then sort and remove duplicates
 - Continue doing mutation steps until a stable solution is found
 
-No analytical solutions, nor optimized search paths will be employed.
+No analytical solutions, nor optimized search paths will be employed. Perform the sanity check below:
 
-# Sanity
+## Sanity
 To verify you are actually doing all the work, print every element in the array/vector in `mutate` before returning it (i.e. after sort + dedup steps). With the standard `305 295 300` input, there should be an extra `4810614` extra lines of output.
 
 ## Usage
@@ -58,6 +60,3 @@ Some rust extra notes:
 - a more cpp style `is_valid` function without pattern matching in rust made no noticeable performance increase, and the pattern matching feels more reabable despite being longer
 - using a `::new` wrapper in `mutate` gave an extremely insignificant performance hit, and looks nicer
 - arg parsing without a library was awkwardly unwrappy - would not recommend `std::env:args` (knocked it down from the cleanest to read language implementation)
-
-## Notes
-All files in here are based on resources from [the original post](http://unriskinsight.blogspot.co.uk/2014/06/fast-functional-goats-lions-and-wolves.html), but rewritten to be nice looking.
