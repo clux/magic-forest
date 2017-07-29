@@ -1,7 +1,6 @@
-use std::fmt;
 use std::process;
 
-#[derive(Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(PartialEq, Eq, PartialOrd, Ord, Debug)]
 struct Forest {
     goats : i32,
     wolves : i32,
@@ -24,12 +23,6 @@ impl Forest {
 
     fn is_valid(&self) -> bool {
         self.goats >= 0 && self.wolves >= 0 && self.lions >= 0
-    }
-}
-
-impl fmt::Display for Forest {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{{ goats: {}, wolves: {}, lions: {} }}", self.goats, self.wolves, self.lions)
     }
 }
 
@@ -71,9 +64,9 @@ fn main(){
     let lions : i32 = args.next().unwrap().parse().unwrap();
 
     let initial = Forest { goats, wolves, lions};
-    println!("Initial {}", initial);
+    println!("Initial: {:?}", initial);
 
     for f in solve(initial) {
-        println!("Solution: {}", f);
+        println!("Solution: {:?}", f);
     }
 }
