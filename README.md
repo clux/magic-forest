@@ -13,10 +13,10 @@ No analytical solutions, nor optimized search paths will be employed.
 ## Usage
 
 ```bash
-# node 6
+# node
 time ./forest.js 305 295 300
-# c++14
-clang++ -O3 -std=c++14 forest.cpp -o cppforest
+# c++14 (gcc)
+g++ -O3 -std=c++14 forest.cpp -o cppforest
 time ./cppforest 305 295 300
 ```
 
@@ -25,6 +25,5 @@ All files in here are based on resources from [the original post](http://unriski
 
 TL;DR benchmarks results.
 
-- C++ rewrite is just as fast as original.
-- JS rewrite is just a lot shorter and slightly faster.
-- C++ version is roughly 34 times faster than the JS version.
+- c++14 with gcc 7 is is roughly 38 times faster than node 6.11
+- c++14 with gcc 7 is roughly 10% faster than c++14 with llvm 4
