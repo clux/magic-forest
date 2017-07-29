@@ -13,11 +13,11 @@ No analytical solutions, nor optimized search paths will be employed.
 ## Usage
 
 ```bash
-# javascript
-$ ./forest.js 305 295 300
+# node 6
+time ./forest.js 305 295 300
 # c++14
-$ clang++ -O3 -std=c++14 forest.cpp -o cppforest
-./cppforest 305 295 300
+clang++ -O3 -std=c++14 forest.cpp -o cppforest
+time ./cppforest 305 295 300
 ```
 
 ## Notes

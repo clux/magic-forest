@@ -2,7 +2,6 @@
 #include <functional>
 #include <iostream>
 #include <vector>
-#include <time.h>
 
 using namespace std;
 
@@ -68,8 +67,6 @@ int main(int argc, char *argv[]) {
     cerr << "USAGE: " << argv[0] << " <goats> <wolves> <lions>" << endl;
     exit(EXIT_FAILURE);
   }
-  clock_t t = clock();
   Forest initial{stoi(argv[1]), stoi(argv[2]), stoi(argv[3])};
   for (auto f: solve(initial)) cout << "Solution: " << f << endl;
-  cout << (static_cast<double>(clock() - t))*1000/CLOCKS_PER_SEC << "ms" << endl;
 }

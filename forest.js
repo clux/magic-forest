@@ -21,7 +21,7 @@ var order = function (x, y) {
 var notFirstOrPrevious = function (f, i, ary) {
   return (i === 0 || order(f, ary[i - 1]) !== 0);
 };
- 
+
 var mutate = function (forests) {
   return forests.reduce(function (acc, f) {
     acc.push(new Forest(f.goats - 1, f.wolves - 1, f.lions + 1));
@@ -44,10 +44,9 @@ if (module === require.main) {
   if (args.length !== 3 || args.some(Number.isNaN)) {
     return console.log('USAGE: ' + args[1] + ' <goats> <wolves> <lions>');
   }
-  console.time('Time');
+
   var initial = new Forest(args[0], args[1], args[2]);
   solve(initial).forEach(function (f) {
     console.log('Solution:', f);
   });
-  console.timeEnd('Time');
 }
