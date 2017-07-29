@@ -45,7 +45,6 @@ Last tested 29th July 2017, using latest packages in Arch: stable rust (1.19), p
 - rust is roughly 70 times faster than python
 - rust is roughly 40 times faster than node
 - rust is roughly 5% faster than gcc/c++
-
 - gcc/c++ is roughly 10% faster than llvm/c++
 - c++14 compiler flag had no noticeable performance change from c++11
 - python2 is roughly 5% faster than python3
