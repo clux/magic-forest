@@ -15,9 +15,10 @@ Only the brute forcing solution is used for all languages.
 No analytical solutions, nor optimized search paths will be employed. Perform the sanity check below:
 
 ## Sanity
-To verify you are actually doing all the work, print every element in the array/vector in `mutate` before returning it (i.e. after sort + dedup steps). With the standard `305 295 300` input, there should be an extra `4810614` extra lines of output.
+To verify you are actually doing all the work, print every element in the array/vector in `mutate` before returning it (i.e. after sort + dedup steps). With the arguments `105 95 100` input, there should be an extra `200214` lines of output from debug prints (see [debug.diff](./debug.diff) and [test.sh](./test.sh)).
 
 ## Usage
+Build and run all sequentially with `bench.sh` or run them individually:
 
 ```bash
 # python
