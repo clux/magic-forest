@@ -59,11 +59,14 @@ Python probably suffers the most given its lack of an inplace sort/dedup combo (
 
 Node runs the same task as python in almost half the time despite having to implement it's own filter for removing duplicate ordered elements. It's also a clean functional solution. Historically native loops have been faster than stuff like `reduce`, but we're not going back to those days (so have not tested further).
 
-Go version feels very much like python. Same type of hack to sort and deduplicate an array, but using a map with throwaway values instead to force it out of key uniqueness. Seems to generate sensible comparators and notions of equality automatically (perhaps a hash type thing) which at least is nice. The explicit filters functions having to be inlined everywhere makes this solution the ugliest of them all. It's vastly faster than any of the scripting languages though.
+Go version feels very much like python. Same type of hack to sort and deduplicate an array, but using a map with throwaway values instead to force it out of key uniqueness. Maybe there is a better way for this crucial bit. The explicit filters functions having to be inlined everywhere makes this solution the ugliest of them all. It's vastly faster than any of the scripting languages though.
 
 Modern cpp solution is very readable at only a few more lines than the scripting language counterparts. A bit of mental overhead on emplace, awkward iterator sempantics with back inserters, but even that is pretty standard modern cpp really. There's a more standalone function approach here than rust due to not having traits, and also that passing member functions can look awkward in long `<algorithm>` instructions.
 
-Rust outperforming C++ was unexpected, but it all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance. It's also the only language herein that was able to derive all the obvious implementations of equality, comparison and print representation.
+Rust outperforming C++ was unexpected, but it all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance.
+
+Go and Rust were the only two languages to automatically derive the obvious implementations of equality, comparison and print representation.
+
 
 Some rust extra notes:
 - using `cargo build --release` with the same file as `main.rs` had no change in performance despite more flags sent to `rustc` by cargo - chose to use `rustc` directly just for folder structure because of this
