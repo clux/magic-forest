@@ -1,5 +1,5 @@
 # Magic Forest Benchmarks
-Personal comparisons of languages based on what I consider idiomatic use of these languages.
+Personal comparisons of languages based on what I consider idiomatic use of these languages. Don't read too much into these.
 
 This is based on the old blog post [Fast Functional Goats, Lions and Wolves](http://unriskinsight.blogspot.co.uk/2014/06/fast-functional-goats-lions-and-wolves.html) which gathered some publicity in 2014, but was broken by people finding an analytical solution.
 
@@ -26,10 +26,11 @@ time ./forest.js 305 295 300
 # python
 time ./forest.py 305 295 300
 
-# c++14 (gcc)
+# c++ (gcc)
 g++ -O3 -std=c++14 forest.cpp -o cppforest
 time ./cppforest 305 295 300
-# c++14 (llvm)
+
+# c++ (llvm)
 clang++ -O3 -std=c++14 forest.cpp -o cppforestllvm
 time ./cppforestllvm 305 295 300
 
@@ -39,13 +40,14 @@ time ./forest 305 295 300
 ```
 
 ## Personal Results
-Last tested July 2017
+Last tested 29th July 2017, using latest packages in Arch: stable rust (1.19), python 3, node 6 LTS, c++ with both llvm4 and gcc7.
 
-- rust 1.19 (stable) is roughly 70 times faster than python 3
-- rust 1.19 (stable) is roughly 40 times faster than node 6.11
-- rust 1.19 (stable) is roughly 5% faster than c++14 with gcc 7
-- c++14 with gcc 7 is roughly 10% faster than c++14 with llvm 4
-- c++14 had no noticeable performance change from c++11
+- rust is roughly 70 times faster than python
+- rust is roughly 40 times faster than node
+- rust is roughly 5% faster than gcc/c++
+
+- gcc/c++ is roughly 10% faster than llvm/c++
+- c++14 compiler flag had no noticeable performance change from c++11
 - python2 is roughly 5% faster than python3
 
 ### Comments
