@@ -51,14 +51,13 @@ time ./forest 305 295 300
 ## Personal Results
 Last tested 29th July 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3, node 6 LTS, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8.
 
-- rust is roughly 800 times faster than haskell
-- rust is roughly 70 times faster than python
-- rust is roughly 40 times faster than node
-- rust is roughly 3 times faster than go
-- rust is roughly 5% faster than gcc/c++
-- gcc/c++ is roughly 10% faster than llvm/c++
-- c++14 compiler flag had no noticeable performance change from c++11
-- python2 is roughly 5% faster than python3
+- rust: 300ms
+- c++/gcc: 340ms
+- c++/llvm: 370ms
+- go: 1.050s
+- node: 14s
+- python: 25s
+- haskell: 4min12s
 
 ### Comments
 #### Haskell
@@ -70,6 +69,8 @@ Just atrocious for this type of problem. The exponentially growing lists we flat
 Probably suffers from its lack of an inplace sort/dedup combo (as far as I can tell). There's also appears to be no nice way to size the lists without the `[None] * x` hacks.
 
 Current solution is probably one of the cleanest one to read though (if you can ignore the weird semantics of `list(set(comprehension)))`). Unfortunately, it is also the slowest sensible language here.
+
+Interestingly, python2 performed about a second better than python3 here.
 
 #### Node
 Clocking in at just over half the time of python despite having to implement it's own filter for removing duplicate ordered elements. Solid effort.
@@ -87,6 +88,10 @@ The explicit filters functions having to be inlined everywhere makes this soluti
 Modern cpp solution is very readable at only a few more lines than the scripting language counterparts. A bit of mental overhead on emplace, awkward iterator sempantics with back inserters, but even that is pretty standard modern cpp really.
 
 There's a more standalone function approach here than rust due to not having traits, and also that passing member functions can look awkward in long `<algorithm>` instructions.
+
+The choice of `-std=c++11` vs `-std=c++14` made no difference in performance.
+
+gcc seems to be consistently around 5% faster than clang.
 
 #### Rust
 Rust impressively inches ahead of C++ with completely normal code. It all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance.
