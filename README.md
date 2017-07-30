@@ -10,7 +10,7 @@ Only the brute forcing solution is used for all languages.
 - In mutation step, create all possible variations, then filter out invalids, then sort and remove duplicates
 - Continue doing mutation steps until a stable solution is found
 - No third party libraries
-- Language idiomatic solution (no obscure/largely expanding optimizations - what would your colleague write?)
+- Language idiomatic solution (no obscure/largely expanding optimizations)
 
 No analytical solutions, nor optimized search paths will be employed. Perform the sanity check below:
 
@@ -49,7 +49,7 @@ time ./forest 305 295 300
 ```
 
 ## Personal Results
-Last tested 29th July 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3, node 6 LTS, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8.
+Last tested 29th July 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6, node 6.11 LTS, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8.
 
 - rust: 300ms
 - c++/gcc: 340ms
@@ -59,7 +59,9 @@ Last tested 29th July 2017 on an i7 7700K, using latest packages in Arch: stable
 - python: 25s
 - haskell: 4min12s
 
-### Comments
+All results are based on the above input data `305 295 300`, where the exponential nature of the problem really highlights the differences between languages.
+
+### Discussion
 #### Haskell
 Just atrocious for this type of problem. The exponentially growing lists we flatten recursively, that keep being duplicated by purity just cause the thing to grind to a halt with my normal parameters. Bang patterns sped it up by a factor of 3 (not super idiomatic), but you really need `Data.Vector` here for this. Unfortunately for Haskell, bypassing both laziness and purity is too far from idiomatic for me to bother with it.
 
@@ -98,7 +100,7 @@ Rust impressively inches ahead of C++ with completely normal code. It all seems 
 
 This feels like one of the cleanest and least magic implementations of the bunch.
 
-To see how this compared in a real word setting with `cargo`, a blank project with `forest.hs` as `main.rs` and built with `cargo build --release` provided no change in performance.
+Wrapping `forest.rs` inside a `cargo` built project provided no change in performance when building with `cargo build --release` despite more numerous compiler/linker flags.
 
 #### Meta
 Interestingly, all the compiled languages apart from C++ were able to automatically derive the obvious implementations of equality, comparison and a sensible print representation.
