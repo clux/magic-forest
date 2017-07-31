@@ -24,6 +24,9 @@ Build and run all sequentially with [bench.sh](./bench.sh) or run them individua
 # python
 time ./forest.py 305 295 300
 
+# python (pypy)
+time pypy forest.py 305 295 300
+
 # node
 time ./forest.js 305 295 300
 

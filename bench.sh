@@ -21,6 +21,8 @@ run_all() {
   time ./forest.js 305 295 300
   echo "Python"
   time ./forest.py 305 295 300
+  echo "Python (PYPY)"
+  time pypy forest.py 305 295 300
   echo "Haskell"
   time ./ghcforest 305 295 300
 }
