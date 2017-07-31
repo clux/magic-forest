@@ -30,7 +30,7 @@ def mutate(forests):
         next.append(Forest(f.goats - 1, f.wolves - 1, f.lions + 1))
         next.append(Forest(f.goats - 1, f.wolves + 1, f.lions - 1))
         next.append(Forest(f.goats + 1, f.wolves - 1, f.lions - 1))
-    # Remove invalids, and sort/dedup by converting to and back from a set
+    # Remove invalids, and sort/dedup by converting to a set
     # This need __hash__ and __eq__ implementations
     return set(x for x in next if x.is_valid())
 

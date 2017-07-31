@@ -52,14 +52,15 @@ time ./forest 305 295 300
 ```
 
 ## Personal Results
-Last tested 29th July 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6, node 6.11 LTS, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8.
+Last tested 29th July 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 6.11 LTS, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8.
 
 - rust: 300ms
 - c++/gcc: 340ms
 - c++/llvm: 370ms
-- go: 1.050s
+- go: 1.150s
+- python/pypy3: 4s
 - node: 14s
-- python: 25s
+- python/3: 24s
 - haskell: 4min12s
 
 All results are based on the above input data `305 295 300`, where the exponential nature of the problem really highlights the differences between languages.
@@ -71,16 +72,16 @@ Just atrocious for this type of problem. The exponentially growing lists we flat
 [Someone has done it](https://github.com/logicchains/MagicForest/blob/master/hsForest.hs), but it looks terrible. I tried to run this version, but Haskell packages on Arch are continually in a state.
 
 #### Python
-Probably suffers from its lack of an inplace sort/dedup combo (as far as I can tell). There's also appears to be no nice way to size the lists without the `[None] * x` hacks.
+Performs badly under the default interpreter, but is really solid under pypy. Solution is almost as nice to read as the Haskell implementation.
 
-Current solution is probably one of the cleanest one to read though (if you can ignore the weird semantics of `list(set(comprehension)))`). Unfortunately, it is also the slowest sensible language here.
+Sort/dedup done by wrapping the list in a `set()`. Hard to tell how that really works, but it's what everyone uses. There's appears to be no nice way to size the lists without the `[None] * x` hacks.
 
-Interestingly, python2 performed about a second better than python3 here.
+Current solution is really nice to read.
 
 #### Node
-Clocking in at just over half the time of python despite having to implement it's own filter for removing duplicate ordered elements. Solid effort.
+Lands bang in the middle of the two python implementations. Solid effort for having to implement its own duplicate element filter.
 
-It's also a clean functional solution. Historically native loops have been faster than stuff like `reduce`, but on node 6, using `forEach` with a correctly sized `new Array(3*forests.length)` as a starting point in `mutate` turned out to be quite detrimental to performance (14->18s).
+It's also a clean functional solution. Historically native loops have been faster than stuff like `reduce`, but on node 6, using `forEach` with a correctly sized `new Array(3*forests.length)` as a starting point in `mutate` actually turned out to be quite detrimental to performance (14->18s).
 
 #### Go
 This version feels very similar to python.
@@ -101,7 +102,7 @@ gcc seems to be consistently around 5% faster than clang.
 #### Rust
 Rust impressively inches ahead of C++ with completely normal code. It all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance.
 
-This feels like one of the cleanest and least magic implementations of the bunch.
+Perhaps the least magic implementation of the bunch. It's not as nice or short as python / haskell, but at least you can reason about its performance.
 
 Wrapping `forest.rs` inside a `cargo` built project provided no change in performance when building with `cargo build --release` despite more numerous compiler/linker flags.
 
