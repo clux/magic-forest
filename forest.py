@@ -32,13 +32,13 @@ def mutate(forests):
         next.append(Forest(f.goats + 1, f.wolves - 1, f.lions - 1))
     # Remove invalids, and sort/dedup by converting to and back from a set
     # This need __hash__ and __eq__ implementations
-    return list(set(x for x in next if x.is_valid()))
+    return set(x for x in next if x.is_valid())
 
 def solve(forest):
-    forests = [forest]
+    forests = (forest,)
     while any(forests) and not any(f.is_stable() for f in forests):
         forests = mutate(forests)
-    return [f for f in forests if f.is_stable()]
+    return (f for f in forests if f.is_stable())
 
 if __name__ == '__main__':
     args = sys.argv
