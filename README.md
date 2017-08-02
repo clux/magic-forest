@@ -62,6 +62,7 @@ Last tested 29th July 2017 on an i7 7700K, using latest packages in Arch: stable
 - c++/llvm: 370ms
 - go: 1.150s
 - python/pypy3: 4s
+- elixir: 6s
 - node: 14s
 - python/3: 24s
 - haskell: 4min12s
