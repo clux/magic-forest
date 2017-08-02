@@ -46,13 +46,16 @@ time ./cppforestllvm 305 295 300
 rustc -C opt-level=3 forest.rs
 time ./forest 305 295 300
 
+# elixir
+time ./forest.ex 305 295 300
+
 # haskell (ghc)
 ghc -O forest.hs
 time ./forest 305 295 300
 ```
 
 ## Personal Results
-Last tested 29th July 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 6.11 LTS, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8.
+Last tested 29th July 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 6.11 LTS, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8, elixir 1.5.0.
 
 - rust: 300ms
 - c++/gcc: 340ms

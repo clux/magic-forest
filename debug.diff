@@ -11,21 +11,40 @@ index a445d88..c60f382 100644
 +  }
    return next;
  }
- 
+
+diff --git a/forest.ex b/forest.ex
+index 6716d58..2776341 100755
+--- a/forest.ex
++++ b/forest.ex
+@@ -18,9 +18,13 @@ defmodule Forest do
+   end
+
+   def mutate(xs) do
+-    Enum.flat_map(xs, fn(f) -> mutations(f) end) \
++    next = Enum.flat_map(xs, fn(f) -> mutations(f) end) \
+       |> Enum.filter(fn(f) -> is_valid(f) end) \
+       |> Enum.uniq()
++    Enum.each(next, fn (s) ->
++      IO.puts "Mutated: " <> (inspect s)
++    end)
++    next
+   end
+
+   def solve(forest) do
 diff --git a/forest.go b/forest.go
-index ffb4364..a686030 100644
+index c93e48e..f7d198e 100644
 --- a/forest.go
 +++ b/forest.go
 @@ -36,6 +36,9 @@ func mutate(forests []Forest) []Forest {
-       next = append(next, k)
-     }
-   }
-+  for _, v := range next {
-+    fmt.Printf("Mutated: %v\n", v)
-+  }
-   return next
+ 			next = append(next, k)
+ 		}
+ 	}
++	for _, v := range next {
++		fmt.Printf("Mutated: %v\n", v)
++	}
+ 	return next
  }
- 
+
 diff --git a/forest.hs b/forest.hs
 index ac2e18e..67f469b 100644
 --- a/forest.hs
@@ -35,12 +54,12 @@ index ac2e18e..67f469b 100644
  import Data.List
  import System.Environment
 +import Debug.Trace
- 
+
  data Forest = Forest
    { goats :: !Int
 @@ -18,7 +19,7 @@ is_valid :: Forest -> Bool
  is_valid (Forest g w l) = g >= 0 && w >= 0 && l >= 0
- 
+
  mutate :: [Forest] -> [Forest]
 -mutate xs = nub . filter is_valid . concatMap f $ xs
 +mutate xs = map traceShowId . nub . filter is_valid . concatMap f $ xs
@@ -53,7 +72,7 @@ index 058b64a..2109c2c 100755
 +++ b/forest.js
 @@ -23,12 +23,16 @@ var notFirstOrPrevious = function (f, i, ary) {
  };
- 
+
  var mutate = function (forests) {
 -  return forests.reduce(function (acc, f) {
 +  let next = forests.reduce(function (acc, f) {
@@ -67,24 +86,24 @@ index 058b64a..2109c2c 100755
 +  });
 +  return next;
  };
- 
+
  var solve = function (forest) {
 diff --git a/forest.py b/forest.py
-index 4fd10a7..24cc903 100755
+index 1681ab5..5c37506 100755
 --- a/forest.py
 +++ b/forest.py
 @@ -32,7 +32,10 @@ def mutate(forests):
          next.append(Forest(f.goats + 1, f.wolves - 1, f.lions - 1))
-     # Remove invalids, and sort/dedup by converting to and back from a set
+     # Remove invalids, and sort/dedup by converting to a set
      # This need __hash__ and __eq__ implementations
--    return list(set([x for x in next if x.is_valid()]))
-+    next = list(set([x for x in next if x.is_valid()]))
+-    return set(x for x in next if x.is_valid())
++    next = set(x for x in next if x.is_valid())
 +    for x in next:
 +        print('Mutated: {}'.format(x))
 +    return next
- 
+
  def solve(forest):
-     forests = [forest]
+     forests = (forest,)
 diff --git a/forest.rs b/forest.rs
 index e73cc9e..007385a 100644
 --- a/forest.rs
@@ -98,4 +117,4 @@ index e73cc9e..007385a 100644
 +    }
      next
  }
- 
+

@@ -14,6 +14,7 @@ verify_output() {
   local -r cppres=$(./cppforest 105 95 100 | wc -l)
   # haskell's traceShowId prints to stderr
   local -r ghcres=$(./ghcforest 105 95 100 2>&1 | wc -l)
+  local -r iexres=$(./forest.ex 105 95 100 | wc -l)
   local -r rustres=$(./rustforest 105 95 100 | wc -l)
 
 
@@ -21,6 +22,7 @@ verify_output() {
   [[ $pyres == 200216 ]]
   [[ $gores == 200216 ]]
   [[ $ghcres == 200216 ]]
+  [[ $iexres == 200216 ]]
   [[ $rustres == 200216 ]]
   [[ $cppres == 200216 ]]
 }

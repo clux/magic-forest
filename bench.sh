@@ -19,6 +19,8 @@ run_all() {
   time ./goforest 305 295 300
   echo "NodeJS"
   time ./forest.js 305 295 300
+  echo "Elixir"
+  time ./forest.ex 305 295 300
   echo "Python 3"
   time ./forest.py 305 295 300
   echo "Python (PYPY3)"
