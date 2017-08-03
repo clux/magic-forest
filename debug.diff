@@ -13,21 +13,17 @@ index a445d88..c60f382 100644
  }
 
 diff --git a/forest.ex b/forest.ex
-index 6716d58..2776341 100755
+index 9499782..939e0c6 100755
 --- a/forest.ex
 +++ b/forest.ex
-@@ -18,9 +18,13 @@ defmodule Forest do
+@@ -18,7 +18,9 @@ defmodule Forest do
    end
 
    def mutate(xs) do
--    Enum.flat_map(xs, fn(f) -> mutations(f) end) \
-+    next = Enum.flat_map(xs, fn(f) -> mutations(f) end) \
-       |> Enum.filter(fn(f) -> is_valid(f) end) \
-       |> Enum.uniq()
-+    Enum.each(next, fn (s) ->
-+      IO.puts "Mutated: " <> (inspect s)
-+    end)
-+    next
+-    Enum.flat_map(xs, &mutations/1) |> Enum.filter(&is_valid/1) |> Enum.uniq()
++    res = Enum.flat_map(xs, &mutations/1) |> Enum.filter(&is_valid/1) |> Enum.uniq()
++    Enum.each(res, fn(x) -> IO.puts "Mutation: " <> (inspect x) end)
++    res
    end
 
    def solve(forest) do
@@ -117,4 +113,3 @@ index e73cc9e..007385a 100644
 +    }
      next
  }
-
