@@ -18,30 +18,25 @@ defmodule Forest do
   end
 
   def mutate(xs) do
-    Enum.flat_map(xs, fn(f) -> mutations(f) end) \
-      |> Enum.filter(fn(f) -> is_valid(f) end) \
-      |> Enum.uniq()
+    Enum.flat_map(xs, &mutations/1) |> Enum.filter(&is_valid/1) |> Enum.uniq()
   end
 
   def solve(forest) do
-    Enum.reduce_while(Stream.iterate(0, &(&1+1)), [forest], fn (_, acc) ->
-      if !Enum.empty?(acc) && !Enum.any?(acc, fn(f) -> is_stable(f) end) do
+    Enum.reduce_while(Stream.cycle([0]), [forest], fn (_, acc) ->
+      if !Enum.empty?(acc) && !Enum.any?(acc, &is_stable/1) do
         {:cont, mutate(acc)}
       else
         {:halt, acc}
       end
-    end) |> Enum.filter(fn(f) -> is_stable(f) end)
+    end) |> Enum.filter(&is_stable/1)
   end
 end
 
 defmodule Script do
   def main(args) do
-    initial = case args do
+    initial = case Enum.map(args, &String.to_integer/1) do
       [g, w, l] ->
-        {goats, _} = Integer.parse(g)
-        {wolves, _} = Integer.parse(w)
-        {lions, _} = Integer.parse(l)
-        %Forest{goats: goats , wolves: wolves, lions: lions}
+        %Forest{goats: g , wolves: w, lions: l}
       _ ->
         IO.puts "USAGE: forest <goats> <wolves> <lions>"
         System.halt(1)
