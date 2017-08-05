@@ -58,8 +58,8 @@ time ./forest 305 295 300
 Last tested 29th July 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 6.11 LTS, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8, elixir 1.5.0.
 
 - rust: 300ms
-- c++/gcc: 340ms
-- c++/llvm: 370ms
+- c++/gcc: 300ms
+- c++/llvm: 310ms
 - go: 1.150s
 - python/pypy3: 4s
 - elixir: 6s
@@ -97,14 +97,18 @@ The explicit filters functions having to be inlined everywhere makes this soluti
 #### C++
 Modern cpp solution is very readable at only a few more lines than the scripting language counterparts. A bit of mental overhead on emplace, awkward iterator sempantics with back inserters, but even that is pretty standard modern cpp really.
 
+It turns out that creating a new list with the unique iterator than erasing from it is faster, but we're trying to keep languages between semantics similar.
+
 There's a more standalone function approach here than rust due to not having traits, and also that passing member functions can look awkward in long `<algorithm>` instructions.
 
 The choice of `-std=c++11` vs `-std=c++14` made no difference in performance.
 
+Deleting or adding the default constructor of forest actually gained 10% performance, we're not sure why.
+
 gcc seems to be consistently around 5% faster than clang.
 
 #### Rust
-Rust impressively inches ahead of C++ with completely normal code. It all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance.
+Rust impressively ties C++ with completely normal code. It all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance.
 
 Perhaps the least magic implementation of the bunch. It's not as nice or short as python / haskell, but at least you can reason about its performance.
 

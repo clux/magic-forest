@@ -6,6 +6,7 @@
 using namespace std;
 
 struct Forest {
+  Forest() = delete;
   Forest(int g, int w, int l) : goats{g}, wolves{w}, lions{l} {}
 
   bool operator<(const Forest& rhs) const {
