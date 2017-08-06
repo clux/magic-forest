@@ -30,8 +30,8 @@ solve = solve' . S.singleton
   where
   solve' xs | cond xs = solve' $ mutate xs
             | otherwise = S.filter isStable xs
-  cond vec | S.null vec = False
-           | otherwise = S.null . S.filter isStable $ vec
+  cond set | S.null set = False
+           | otherwise = S.null . S.filter isStable $ set
 
 main :: IO ()
 main = do
