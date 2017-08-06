@@ -55,7 +55,7 @@ time ./forest 305 295 300
 ```
 
 ## Personal Results
-Last tested 29th July 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 6.11 LTS, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8, elixir 1.5.0.
+Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 6.11 LTS, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8, elixir 1.5.0.
 
 - c++/gcc: 300ms
 - rust: 300ms
@@ -89,6 +89,8 @@ Current solution is really nice to read.
 Lands bang in the middle of the two python implementations. Solid effort for having to implement its own duplicate element filter.
 
 It's also a clean functional solution. Historically native loops have been faster than stuff like `reduce`, but on node 6, using `forEach` with a correctly sized `new Array(3*forests.length)` as a starting point in `mutate` actually turned out to be quite detrimental to performance (14->18s).
+
+Using `Set` in the `reduce` is an option, but this caused my node to dump core after using all my heap memory.
 
 #### Go
 This version feels very similar to python.
