@@ -61,19 +61,19 @@ Last tested 29th July 2017 on an i7 7700K, using latest packages in Arch: stable
 - c++/gcc: 300ms
 - c++/llvm: 310ms
 - go: 1.150s
+- haskell: 3s
 - python/pypy3: 4s
 - elixir: 6s
 - node: 14s
 - python/3: 24s
-- haskell: 4min12s
 
 All results are based on the above input data `305 295 300`, where the exponential nature of the problem really highlights the differences between languages.
 
 ### Discussion
 #### Haskell
-Just atrocious for this type of problem. The exponentially growing lists we flatten recursively, that keep being duplicated by purity just cause the thing to grind to a halt with my normal parameters. Bang patterns sped it up by a factor of 3 (not super idiomatic), but you really need `Data.Vector` here for this. Unfortunately for Haskell, bypassing both laziness and purity is too far from idiomatic for me to bother with it.
+The cleanest solution here by far if you like the functional style; about half the number of lines of the go solution, but taking twice as long.
 
-[Someone has done it](https://github.com/logicchains/MagicForest/blob/master/hsForest.hs), but it looks terrible. I tried to run this version, but Haskell packages on Arch are continually in a state.
+This one is interesting because the solution time went from 4 minutes to 3seconds after switching from native lists to `Data.Set`. Native lists probably went into the cache miss territory with these sizes, but it's still a mind-boggling speedup.
 
 #### Python
 Performs badly under the default interpreter, but is really solid under pypy. Solution is almost as nice to read as the Haskell implementation.
