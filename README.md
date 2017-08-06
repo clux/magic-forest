@@ -50,15 +50,15 @@ time ./forest 305 295 300
 time ./forest.ex 305 295 300
 
 # haskell (ghc)
-ghc -O forest.hs
+ghc -O3 forest.hs
 time ./forest 305 295 300
 ```
 
 ## Personal Results
 Last tested 29th July 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 6.11 LTS, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8, elixir 1.5.0.
 
-- rust: 300ms
 - c++/gcc: 300ms
+- rust: 300ms
 - c++/llvm: 310ms
 - go: 1.150s
 - haskell: 3s
@@ -71,9 +71,12 @@ All results are based on the above input data `305 295 300`, where the exponenti
 
 ### Discussion
 #### Haskell
-The cleanest solution here by far if you like the functional style; about half the number of lines of the go solution, but taking twice as long.
+The cleanest solution here by far if you like the functional style; about half the number of lines of the go solution, but taking twice as long. It also uses the same small deviation as go from the standard algorithm by inserting into a set, thus doing the uniqueness part slightly earlier on.
 
 This one is interesting because the solution time went from 4 minutes to 3seconds after switching from native lists to `Data.Set`. Native lists probably went into the cache miss territory with these sizes, but it's still a mind-boggling speedup.
+
+#### Elixir
+Another clean functional implementation. I could not get it to compile first without using their `mix` build system so had to just bench mark it under the elixir interpreter. This probably does not work in elixir's favour, but it still performs pretty well for it. I'm surprised how much I actually enjoyed this dynamic functional style.
 
 #### Python
 Performs badly under the default interpreter, but is really solid under pypy. Solution is almost as nice to read as the Haskell implementation.
@@ -81,9 +84,6 @@ Performs badly under the default interpreter, but is really solid under pypy. So
 Sort/dedup done by wrapping the list in a `set()`. Hard to tell how that really works, but it's what everyone uses. There's appears to be no nice way to size the lists without the `[None] * x` hacks.
 
 Current solution is really nice to read.
-
-#### Elixir
-Another clean functional implementation. I could not get it to compile first without using their `mix` build system so had to just bench mark it under the elixir interpreter. This probably does not work in elixir's favour, but it still performs pretty well for it. I'm surprised how much I actually enjoyed this dynamic functional style.
 
 #### Node
 Lands bang in the middle of the two python implementations. Solid effort for having to implement its own duplicate element filter.
