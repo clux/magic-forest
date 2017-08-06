@@ -82,6 +82,9 @@ Sort/dedup done by wrapping the list in a `set()`. Hard to tell how that really 
 
 Current solution is really nice to read.
 
+#### Elixir
+Another clean functional implementation. I could not get it to compile first without using their `mix` build system so had to just bench mark it under the elixir interpreter. This probably does not work in elixir's favour, but it still performs pretty well for it. I'm surprised how much I actually enjoyed this dynamic functional style.
+
 #### Node
 Lands bang in the middle of the two python implementations. Solid effort for having to implement its own duplicate element filter.
 
