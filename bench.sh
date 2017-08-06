@@ -2,7 +2,7 @@
 
 build_all() {
   go build -o goforest forest.go
-  ghc -O forest.hs -o ghcforest # creates forest.{hi,o} pointlessly
+  ghc -O3 forest.hs -o ghcforest # creates forest.{hi,o} pointlessly
   g++ -O3 -std=c++14 forest.cpp -o cppforest
   clang++ -O3 -std=c++14 forest.cpp -o cppforestclang
   rustc -C opt-level=3 forest.rs -o rustforest
