@@ -1,28 +1,14 @@
 #!/usr/bin/env python
 import sys
+from collections import namedtuple
 
-class Forest:
-    def __init__(self, goats, wolves, lions):
-        self.goats = goats
-        self.wolves = wolves
-        self.lions = lions
+Forest = namedtuple('Forest', ('goats', 'wolves', 'lions'))
 
-    def __repr__(self):
-        return '{{ goats: {}, wolves: {}, lions: {} }}'.format(self.goats, self.wolves, self.lions)
+def is_stable(f):
+    return (f.goats == 0 and (f.wolves == 0 or f.lions == 0)) or (f.wolves == 0 and f.lions == 0)
 
-    def __eq__(self, other):
-        return self.goats == other.goats and self.wolves == other.wolves and self.lions == other.lions
-
-    def __hash__(self):
-        return hash((self.goats, self.wolves, self.lions))
-
-    def is_stable(self):
-        return (self.goats == 0 and (self.wolves == 0 or self.lions == 0)) or \
-               (self.wolves == 0 and self.lions == 0)
-
-    def is_valid(self):
-        return (self.goats >= 0 and self.wolves >= 0 and self.lions >= 0)
-
+def is_valid(f):
+    return f.goats >= 0 and f.wolves >= 0 and f.lions >= 0
 
 def mutate(forests):
     next = []
@@ -30,15 +16,13 @@ def mutate(forests):
         next.append(Forest(f.goats - 1, f.wolves - 1, f.lions + 1))
         next.append(Forest(f.goats - 1, f.wolves + 1, f.lions - 1))
         next.append(Forest(f.goats + 1, f.wolves - 1, f.lions - 1))
-    # Remove invalids, and sort/dedup by converting to a set
-    # This need __hash__ and __eq__ implementations
-    return set(x for x in next if x.is_valid())
+    return set(f for f in next if is_valid(f))
 
 def solve(forest):
-    forests = (forest,)
-    while any(forests) and not any(f.is_stable() for f in forests):
+    forests = [forest]
+    while any(forests) and not any(is_stable(f) for f in forests):
         forests = mutate(forests)
-    return (f for f in forests if f.is_stable())
+    return (f for f in forests if is_stable(f))
 
 if __name__ == '__main__':
     args = sys.argv
