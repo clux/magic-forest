@@ -52,6 +52,10 @@ time ./forest.ex 305 295 300
 # haskell (ghc)
 ghc -O3 forest.hs
 time ./forest 305 295 300
+
+# fortran (gcc)
+fortran -O3 forest.f08 -o fortranforest
+time ./fortranforest 305 295 300
 ```
 
 ## Personal Results
@@ -60,6 +64,7 @@ Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable ru
 - c++/gcc: 300ms
 - rust: 300ms
 - c++/llvm: 310ms
+- fortran: 750ms
 - go: 1.150s
 - haskell: 3.1s
 - python/pypy3: 4.0s
@@ -113,6 +118,11 @@ The choice of `-std=c++11` vs `-std=c++14` made no difference in performance.
 Deleting or adding the default constructor of forest actually gained 10% performance, we're not sure why.
 
 gcc seems to be consistently around 5% faster than clang.
+
+#### Fortran
+A solution 3x longer than the dubious second place holder in LOC; `go`. It stays within the rules and implements its own quick sort, and as far as Fortran goes, it's remarkably understandable. It was graciously offered by @jchildren in [#4](https://github.com/clux/magic-forest/pull/4).
+
+It's up there in the top 3 languages, but it still performs worse than cpp/rust by a factor of two. It's certainly as close to the metal as these languages, so there should perhaps be room for improvement here without going too nuts.
 
 #### Rust
 Rust impressively ties C++ with completely normal code. It all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance.
