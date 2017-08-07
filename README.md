@@ -61,16 +61,16 @@ time ./fortranforest 305 295 300
 ## Personal Results
 Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 6.11 LTS, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8, elixir 1.5.0.
 
-- c++/gcc: 300ms
+- c++/gcc: 295ms
 - rust: 300ms
 - c++/llvm: 310ms
 - fortran: 750ms
 - go: 1.150s
 - haskell: 3.1s
-- python/pypy3: 4.0s
+- python/pypy3: 3.9s
 - elixir: 5.5s
 - node: 14s
-- python/3: 24s
+- python/3: 16s
 
 All results are based on the above input data `305 295 300`, where the exponential nature of the problem really highlights the differences between languages.
 
@@ -125,7 +125,7 @@ A solution 3x longer than the dubious second place holder in LOC; `go`. It stays
 It's up there in the top 3 languages, but it still performs worse than cpp/rust by a factor of two. It's certainly as close to the metal as these languages, so there should perhaps be room for improvement here without going too nuts.
 
 #### Rust
-Rust impressively ties C++ with completely normal code. It all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance.
+Rust impressively ~ties C++ with completely normal code. It all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance.
 
 Perhaps the least magic implementation of the bunch. It's not as nice or short as python / haskell, but at least you can reason about its performance.
 
