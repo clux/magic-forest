@@ -27,6 +27,21 @@ index 9499782..939e0c6 100755
    end
 
    def solve(forest) do
+diff --git a/forest.f08 b/forest.f08
+index cf904b8..f7b5f75 100644
+--- a/forest.f08
++++ b/forest.f08
+@@ -180,6 +180,10 @@ contains
+         next = pack(next, are_valid(next))
+         call quicksort(next, 1, size(next))
+         call remove_dups(next)
++
++        do i = 1, size(next)
++            print *, next(i)
++        end do
+     end function mutate
+
+     function solve(initial) result(solution)
 diff --git a/forest.go b/forest.go
 index c93e48e..f7d198e 100644
 --- a/forest.go
@@ -85,21 +100,21 @@ index 058b64a..2109c2c 100755
 
  var solve = function (forest) {
 diff --git a/forest.py b/forest.py
-index 1681ab5..5c37506 100755
+index 85eb5bb..ddbe035 100755
 --- a/forest.py
 +++ b/forest.py
-@@ -32,7 +32,10 @@ def mutate(forests):
+@@ -16,7 +16,10 @@ def mutate(forests):
+         next.append(Forest(f.goats - 1, f.wolves - 1, f.lions + 1))
+         next.append(Forest(f.goats - 1, f.wolves + 1, f.lions - 1))
          next.append(Forest(f.goats + 1, f.wolves - 1, f.lions - 1))
-     # Remove invalids, and sort/dedup by converting to a set
-     # This need __hash__ and __eq__ implementations
--    return set(x for x in next if x.is_valid())
-+    next = set(x for x in next if x.is_valid())
-+    for x in next:
+-    return set(f for f in next if is_valid(f))
++    res = set(f for f in next if is_valid(f))
++    for x in res:
 +        print('Mutated: {}'.format(x))
-+    return next
++    return res
 
  def solve(forest):
-     forests = (forest,)
+     forests = [forest]
 diff --git a/forest.rs b/forest.rs
 index e73cc9e..007385a 100644
 --- a/forest.rs
@@ -114,18 +129,3 @@ index e73cc9e..007385a 100644
      next
  }
 
-diff --git a/forest.f08 b/forest.f08
-index cf904b8..f7b5f75 100644
---- a/forest.f08
-+++ b/forest.f08
-@@ -180,6 +180,10 @@ contains
-         next = pack(next, are_valid(next))
-         call quicksort(next, 1, size(next))
-         call remove_dups(next)
-+
-+        do i = 1, size(next)
-+            print *, next(i)
-+        end do
-     end function mutate
- 
-     function solve(initial) result(solution)
