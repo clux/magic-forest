@@ -113,3 +113,19 @@ index e73cc9e..007385a 100644
 +    }
      next
  }
+
+diff --git a/forest.f08 b/forest.f08
+index cf904b8..f7b5f75 100644
+--- a/forest.f08
++++ b/forest.f08
+@@ -180,6 +180,10 @@ contains
+         next = pack(next, are_valid(next))
+         call quicksort(next, 1, size(next))
+         call remove_dups(next)
++
++        do i = 1, size(next)
++            print *, next(i)
++        end do
+     end function mutate
+ 
+     function solve(initial) result(solution)
