@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# minor changes to mutate and solve to reduce unneeded insertions
 import sys
 
 class Forest:
@@ -25,18 +26,21 @@ class Forest:
 
 
 def mutate(forests):
-    next = []
+    next = set()
     for f in forests:
-        next.append(Forest(f.goats - 1, f.wolves - 1, f.lions + 1))
-        next.append(Forest(f.goats - 1, f.wolves + 1, f.lions - 1))
-        next.append(Forest(f.goats + 1, f.wolves - 1, f.lions - 1))
-    # Remove invalids, and sort/dedup by converting to a set
-    # This need __hash__ and __eq__ implementations
-    return set(x for x in next if x.is_valid())
+        new = (
+            Forest(f.goats - 1, f.wolves - 1, f.lions + 1),
+            Forest(f.goats - 1, f.wolves + 1, f.lions - 1),
+            Forest(f.goats + 1, f.wolves - 1, f.lions - 1)
+        )
+        # Remove invalids, and sort/dedup by converting to a set
+        # This need __hash__ and __eq__ implementations
+        [next.add(f) for f in new if f.is_valid()]
+    return next
 
 def solve(forest):
     forests = (forest,)
-    while any(forests) and not any(f.is_stable() for f in forests):
+    while forests and not any(f.is_stable() for f in forests):
         forests = mutate(forests)
     return (f for f in forests if f.is_stable())
 
