@@ -24,7 +24,7 @@ def solve(forest):
         forests = mutate(forests)
     return (f for f in forests if is_stable(f))
 
-if __name__ == '__main__':
+def init():
     args = sys.argv
     if len(args) != 4:
         print('USAGE: {} <goats> <wolves> <lions>'.format(args[0]))
@@ -32,6 +32,11 @@ if __name__ == '__main__':
 
     initial = Forest(int(args[1]), int(args[2]), int(args[3]))
     print('Initial: {}'.format(initial))
-
-    for f in solve(initial):
-        print('Solution: {}'.format(f))
+    return initial
+	
+if __name__ == '__main__':
+    initial = init()
+    import timeit
+    n = 5
+    solutions = timeit.timeit('print(list(solve(initial)))', 'from __main__ import solve, init; initial=init();', number=n)
+    print('done %s in avg %s' % (n, solutions / n))
