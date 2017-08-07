@@ -81,11 +81,11 @@ Another clean functional implementation, benchmarked using the elixir script run
 Compiling it with `mix` was attempted using an `escript` key in a `mix.exs` file, but this yielded no performance benefits in this case.
 
 #### Python
-Performs badly under the default interpreter, but is really solid under pypy. Solution is almost as nice to read as the Haskell implementation.
+Varies greatly based on how you implement this. A `class Forest` with it's own `__eq__` and `__hash__` for `Set()` uniqueness is hugely slower than a shorter and more functional `namedtuple` solution (which you can just stuff in a `Set` by itself). Pypy will also optimize the worse versions (worse under default interpreter) better than it will optimize already optimized python versions.
 
-Sort/dedup done by wrapping the list in a `set()`. Hard to tell how that really works, but it's what everyone uses. There's appears to be no nice way to size the lists without the `[None] * x` hacks.
+Current solution is the shortest one (shorter than the shortest haskell one we've had), and performs solidly under pypy for an interpretted language.
 
-Current solution is really nice to read.
+Pre-allocation of the list in `mutate` turned out to be slightly faster under `python`, but somehow slower under `pypy`, go figure.
 
 #### Node
 Lands bang in the middle of the two python implementations. Solid effort for having to implement its own duplicate element filter.
