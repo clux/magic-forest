@@ -61,9 +61,9 @@ Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable ru
 - rust: 300ms
 - c++/llvm: 310ms
 - go: 1.150s
-- haskell: 3s
-- python/pypy3: 4s
-- elixir: 6s
+- haskell: 3.1s
+- python/pypy3: 4.0s
+- elixir: 5.5s
 - node: 14s
 - python/3: 24s
 
@@ -76,7 +76,9 @@ The cleanest solution here by far if you like the functional style; about half t
 This one is interesting because the solution time went from 4 minutes to 3seconds after switching from native lists to `Data.Set`. Native lists probably went into the cache miss territory with these sizes, but it's still a mind-boggling speedup.
 
 #### Elixir
-Another clean functional implementation. I could not get it to compile first without using their `mix` build system so had to just bench mark it under the elixir interpreter. This probably does not work in elixir's favour, but it still performs pretty well for it. I'm surprised how much I actually enjoyed this dynamic functional style.
+Another clean functional implementation, benchmarked using the elixir script runner. Very cool and enjoyable dynamic functional style.
+
+Compiling it with `mix` was attempted using an `escript` key in a `mix.exs` file, but this yielded no performance benefits in this case.
 
 #### Python
 Performs badly under the default interpreter, but is really solid under pypy. Solution is almost as nice to read as the Haskell implementation.
