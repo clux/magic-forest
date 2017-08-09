@@ -8,6 +8,7 @@ RUN pacman -Syu --noconfirm && pacman --noconfirm -S \
   ghc-static \
   go \
   nodejs \
+  patch \
   pypy3 \
   python \
   ruby \
