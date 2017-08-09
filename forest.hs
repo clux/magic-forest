@@ -1,7 +1,7 @@
 module Main where
 
-import           Data.List
-import           System.Environment
+import qualified Data.Set as Set
+import System.Environment
 
 data Forest = Forest
   { goats  :: !Int
@@ -18,17 +18,16 @@ isStable _              = False
 isValid :: Forest -> Bool
 isValid (Forest g w l) = g >= 0 && w >= 0 && l >= 0
 
--- removes adjacent identical elements
-dedup :: [Forest] -> [Forest]
-dedup = go $ Forest 0 0 0
+-- from haskell-ordnub repo
+ordNub :: (Ord a) => [a] -> [a]
+ordNub l = go Set.empty l
   where
-    go s (x:xs)
-      | x == s = go s xs
-      | otherwise = x : go x xs
-    go _ _ = []
+    go _ [] = []
+    go s (x:xs) = if x `Set.member` s then go s xs
+                                      else x : go (Set.insert x s) xs
 
 mutate :: [Forest] -> [Forest]
-mutate xs = dedup . sort . filter isValid . concatMap f $ xs
+mutate xs = ordNub . filter isValid . concatMap f $ xs
   where
     f (Forest g w l) =
       [ Forest (g - 1) (w - 1) (l + 1)
