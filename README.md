@@ -7,7 +7,7 @@ This is based on the old blog post [Fast Functional Goats, Lions and Wolves](htt
 Only the brute forcing solution is used for all languages.
 
 - Build up the entire tree mutation by mutation from the initial forest
-- In mutation step, create all possible variations, then filter out invalids, then sort and remove duplicates
+- In mutation step, create all possible variations, then filter out invalids, then sort and remove duplicates (don't use sets before the filter)
 - Continue doing mutation steps until a stable solution is found
 - No third party libraries
 - Language idiomatic solution (no obscure/largely expanding optimizations)
@@ -50,42 +50,49 @@ time ./forest 305 295 300
 time ./forest.ex 305 295 300
 
 # haskell (ghc)
-ghc -O forest.hs
+ghc -O3 forest.hs
 time ./forest 305 295 300
 ```
 
 ## Personal Results
-Last tested 29th July 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 6.11 LTS, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8, elixir 1.5.0.
+Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 6.11 LTS, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8, elixir 1.5.0.
 
-- rust: 300ms
 - c++/gcc: 300ms
+- rust: 300ms
 - c++/llvm: 310ms
 - go: 1.150s
-- python/pypy3: 4s
-- elixir: 6s
+- haskell: 3.1s
+- python/pypy3: 4.0s
+- elixir: 5.5s
 - node: 14s
 - python/3: 24s
-- haskell: 4min12s
 
 All results are based on the above input data `305 295 300`, where the exponential nature of the problem really highlights the differences between languages.
 
 ### Discussion
 #### Haskell
-Just atrocious for this type of problem. The exponentially growing lists we flatten recursively, that keep being duplicated by purity just cause the thing to grind to a halt with my normal parameters. Bang patterns sped it up by a factor of 3 (not super idiomatic), but you really need `Data.Vector` here for this. Unfortunately for Haskell, bypassing both laziness and purity is too far from idiomatic for me to bother with it.
+The cleanest solution here by far if you like the functional style; about half the number of lines of the go solution, but taking twice as long. It also uses the same small deviation as go from the standard algorithm by inserting into a set, thus doing the uniqueness part slightly earlier on.
 
-[Someone has done it](https://github.com/logicchains/MagicForest/blob/master/hsForest.hs), but it looks terrible. I tried to run this version, but Haskell packages on Arch are continually in a state.
+This one is interesting because the solution time went from 4 minutes to 3seconds after switching from native lists to `Data.Set`. Native lists probably went into the cache miss territory with these sizes, but it's still a mind-boggling speedup.
+
+#### Elixir
+Another clean functional implementation, benchmarked using the elixir script runner. Very cool and enjoyable dynamic functional style.
+
+Compiling it with `mix` was attempted using an `escript` key in a `mix.exs` file, but this yielded no performance benefits in this case.
 
 #### Python
-Performs badly under the default interpreter, but is really solid under pypy. Solution is almost as nice to read as the Haskell implementation.
+Varies greatly based on how you implement this. A `class Forest` with it's own `__eq__` and `__hash__` for `Set()` uniqueness is hugely slower than a shorter and more functional `namedtuple` solution (which you can just stuff in a `Set` by itself). Pypy will also optimize the worse versions (worse under default interpreter) better than it will optimize already optimized python versions.
 
-Sort/dedup done by wrapping the list in a `set()`. Hard to tell how that really works, but it's what everyone uses. There's appears to be no nice way to size the lists without the `[None] * x` hacks.
+Current solution is the shortest one (shorter than the shortest haskell one we've had), and performs solidly under pypy for an interpretted language.
 
-Current solution is really nice to read.
+Pre-allocation of the list in `mutate` turned out to be slightly faster under `python`, but somehow slower under `pypy`, go figure.
 
 #### Node
 Lands bang in the middle of the two python implementations. Solid effort for having to implement its own duplicate element filter.
 
 It's also a clean functional solution. Historically native loops have been faster than stuff like `reduce`, but on node 6, using `forEach` with a correctly sized `new Array(3*forests.length)` as a starting point in `mutate` actually turned out to be quite detrimental to performance (14->18s).
+
+Using `Set` in the `reduce` is an option, but this caused my node to dump core after using all my heap memory.
 
 #### Go
 This version feels very similar to python.

@@ -1,8 +1,8 @@
 diff --git a/forest.cpp b/forest.cpp
-index a445d88..c60f382 100644
+index caf6e2b..57be0ae 100644
 --- a/forest.cpp
 +++ b/forest.cpp
-@@ -48,6 +48,9 @@ vector<Forest> mutate(const vector<Forest> &curr) {
+@@ -49,6 +49,9 @@ vector<Forest> mutate(const vector<Forest> &curr) {
    auto valid_end = remove_if(begin(next), end(next), is_invalid);
    stable_sort(begin(next), valid_end);
    next.erase(unique(begin(next), valid_end), end(next));
@@ -42,26 +42,26 @@ index c93e48e..f7d198e 100644
  }
 
 diff --git a/forest.hs b/forest.hs
-index ac2e18e..67f469b 100644
+index dead4cf..24c4985 100644
 --- a/forest.hs
 +++ b/forest.hs
-@@ -1,6 +1,7 @@
- {-# LANGUAGE BangPatterns #-}
- import Data.List
+@@ -2,6 +2,7 @@ module Main where
+
+ import qualified Data.Set as S
  import System.Environment
 +import Debug.Trace
 
  data Forest = Forest
    { goats :: !Int
-@@ -18,7 +19,7 @@ is_valid :: Forest -> Bool
- is_valid (Forest g w l) = g >= 0 && w >= 0 && l >= 0
+@@ -19,7 +20,7 @@ isValid :: Forest -> Bool
+ isValid (Forest g w l) = g >= 0 && w >= 0 && l >= 0
 
- mutate :: [Forest] -> [Forest]
--mutate xs = nub . filter is_valid . concatMap f $ xs
-+mutate xs = map traceShowId . nub . filter is_valid . concatMap f $ xs
-   where f (Forest g w l) = [ Forest (g-1) (w-1) (l+1)
-                            , Forest (g-1) (w+1) (l-1)
-                            , Forest (g+1) (w-1) (l-1)
+ mutate :: S.Set Forest -> S.Set Forest
+-mutate = S.filter isValid . S.unions . f
++mutate = S.map traceShowId . S.filter isValid . S.unions . f
+   where f set = [S.map lionEats set, S.map wolfEats set, S.map goatEats set]
+         lionEats (Forest g w l) = Forest (g-1) (w-1) (l+1)
+         wolfEats (Forest g w l) = Forest (g-1) (w+1) (l-1)
 diff --git a/forest.js b/forest.js
 index 058b64a..2109c2c 100755
 --- a/forest.js
@@ -113,3 +113,19 @@ index e73cc9e..007385a 100644
 +    }
      next
  }
+
+diff --git a/forest.f08 b/forest.f08
+index cf904b8..f7b5f75 100644
+--- a/forest.f08
++++ b/forest.f08
+@@ -180,6 +180,10 @@ contains
+         next = pack(next, are_valid(next))
+         call quicksort(next, 1, size(next))
+         call remove_dups(next)
++
++        do i = 1, size(next)
++            print *, next(i)
++        end do
+     end function mutate
+ 
+     function solve(initial) result(solution)
