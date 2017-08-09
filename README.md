@@ -72,7 +72,7 @@ Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable ru
 - c++/llvm: 310ms
 - fortran: 750ms
 - go: 1.150s
-- haskell: 3.1s
+- haskell: 2.7s
 - python/pypy3: 3.9s
 - elixir: 5.5s
 - ruby: 11s
