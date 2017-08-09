@@ -83,9 +83,13 @@ All results are based on the above input data `305 295 300`, where the exponenti
 
 ### Discussion
 #### Haskell
-The cleanest solution here by far if you like the functional style; about half the number of lines of the go solution, but taking twice as long. It also uses the same small deviation as go from the standard algorithm by inserting into a set, thus doing the uniqueness part slightly earlier on.
+A very clean solution, but takes more to reason about when it comes to performance; using `nub` and lists would use 4 minutes to solve this problem, but using `Data.Set` (which is sort of cheating), it would drop to 3s.
 
-This one is interesting because the solution time went from 4 minutes to 3seconds after switching from native lists to `Data.Set`. Native lists probably went into the cache miss territory with these sizes, but it's still a mind-boggling speedup.
+The culprit turns out to be primarily `nub` from `Data.List`. This has been explained in the [haskell-ordnub repo](https://github.com/nh2/haskell-ordnub).
+
+Beyond this issue, the Haskell solution is its usual clean style. One of the shortest implementations by LOC even with having to reimplement `nub`.
+
+It is perhaps a bit unidiomatic to re-implement a dedup algorithm, but it's sufficiently short and performance critical that we have to allow it in order to avoid completely ignoring Haskell.
 
 #### Elixir
 Another clean functional implementation, benchmarked using the elixir script runner. Very cool and enjoyable dynamic functional style.
