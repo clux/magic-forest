@@ -57,26 +57,26 @@ index c93e48e..f7d198e 100644
  }
 
 diff --git a/forest.hs b/forest.hs
-index dead4cf..24c4985 100644
+index 23fa4a7..56701b2 100644
 --- a/forest.hs
 +++ b/forest.hs
 @@ -2,6 +2,7 @@ module Main where
 
- import qualified Data.Set as S
+ import qualified Data.Set as Set
  import System.Environment
 +import Debug.Trace
 
  data Forest = Forest
-   { goats :: !Int
-@@ -19,7 +20,7 @@ isValid :: Forest -> Bool
- isValid (Forest g w l) = g >= 0 && w >= 0 && l >= 0
+   { goats  :: !Int
+@@ -27,7 +28,7 @@ ordNub l = go Set.empty l
+                                       else x : go (Set.insert x s) xs
 
- mutate :: S.Set Forest -> S.Set Forest
--mutate = S.filter isValid . S.unions . f
-+mutate = S.map traceShowId . S.filter isValid . S.unions . f
-   where f set = [S.map lionEats set, S.map wolfEats set, S.map goatEats set]
-         lionEats (Forest g w l) = Forest (g-1) (w-1) (l+1)
-         wolfEats (Forest g w l) = Forest (g-1) (w+1) (l-1)
+ mutate :: [Forest] -> [Forest]
+-mutate xs = ordNub . filter isValid . concatMap f $ xs
++mutate xs = map traceShowId . ordNub . filter isValid . concatMap f $ xs
+   where
+     f (Forest g w l) =
+       [ Forest (g - 1) (w - 1) (l + 1)
 diff --git a/forest.js b/forest.js
 index 058b64a..2109c2c 100755
 --- a/forest.js
@@ -116,10 +116,10 @@ index 85eb5bb..ddbe035 100755
  def solve(forest):
      forests = [forest]
 diff --git a/forest.rb b/forest.rb
-index cf22a7b..2fc8f43 100755
+index 2874102..850dc3f 100755
 --- a/forest.rb
 +++ b/forest.rb
-@@ -33,7 +33,9 @@ def mutate(forests)
+@@ -32,7 +32,9 @@ def mutate(forests)
      xs.push(Forest.new(f.goats + 1, f.wolves - 1, f.lions - 1))
    end
    ys = xs.keep_if {|f| f.is_valid }
