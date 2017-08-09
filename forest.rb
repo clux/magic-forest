@@ -38,7 +38,7 @@ end
 
 def solve(forest)
   forests = [forest]
-  while !forests.empty? && forests.none? {|f| f.is_stable } do
+  while forests.any? && forests.none? {|f| f.is_stable } do
     forests = mutate(forests)
   end
   forests.keep_if {|f| f.is_stable }
