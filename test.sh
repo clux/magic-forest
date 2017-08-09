@@ -9,15 +9,15 @@ build_all() {
 }
 
 verify_output() {
-  [[ $(./fortranforest 105 95 100 | wc -l) == 200218 ]]
-  [[ $(./forest.js 105 95 100 | wc -l) == 200216 ]]
-  [[ $(./forest.py 105 95 100 | wc -l) == 200216 ]]
-  [[ $(./forest.rb 105 95 100 | wc -l) == 200216 ]]
-  [[ $(./goforest 105 95 100 | wc -l) == 200216 ]]
-  [[ $(./ghcforest 105 95 100 2>&1 | wc -l) == 200216 ]]
-  [[ $(./forest.ex 105 95 100 | wc -l) == 200216 ]]
-  [[ $(./rustforest 105 95 100 | wc -l) == 200216 ]]
-  [[ $(./cppforest 105 95 100 | wc -l) == 200216 ]]
+  [[ $(./fortranforest 55 45 50 | wc -l) == 28868 ]]
+  [[ $(./forest.js 55 45 50 | wc -l) == 28866 ]]
+  [[ $(./forest.py 55 45 50 | wc -l) == 28866 ]]
+  [[ $(./forest.rb 55 45 50 | wc -l) == 28866 ]]
+  [[ $(./goforest 55 45 50 | wc -l) == 28866 ]]
+  [[ $(./ghcforest 55 45 50 2>&1 | wc -l) == 28866 ]]
+  [[ $(./forest.ex 55 45 50 | wc -l) == 28866 ]]
+  [[ $(./rustforest 55 45 50 | wc -l) == 28866 ]]
+  [[ $(./cppforest 55 45 50 | wc -l) == 28866 ]]
 }
 
 main() {
