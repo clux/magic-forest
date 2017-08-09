@@ -18,6 +18,7 @@ run_all() {
   echo "Elixir" && time ./forest.ex 305 295 300
   echo "Python 3" && time ./forest.py 305 295 300
   echo "Python (PYPY3)" && time pypy3 forest.py 305 295 300
+  echo "Ruby" && time ./forest.rb 305 295 300
   echo "Haskell" && time ./ghcforest 305 295 300
   echo "Fortran" && time ./fortranforest 305 295 300
 }

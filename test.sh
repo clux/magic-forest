@@ -11,7 +11,8 @@ build_all() {
 verify_output() {
   [[ $(./fortranforest 105 95 100 | wc -l) == 200218 ]]
   [[ $(./forest.js 105 95 100 | wc -l) == 200216 ]]
-  [[ $(./forest.py 105 95 100 | wc -l) ]]
+  [[ $(./forest.py 105 95 100 | wc -l) == 200216 ]]
+  [[ $(./forest.rb 105 95 100 | wc -l) == 200216 ]]
   [[ $(./goforest 105 95 100 | wc -l) == 200216 ]]
   [[ $(./ghcforest 105 95 100 2>&1 | wc -l) == 200216 ]]
   [[ $(./forest.ex 105 95 100 | wc -l) == 200216 ]]
