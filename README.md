@@ -72,7 +72,7 @@ Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable ru
 - haskell: 3.1s
 - python/pypy3: 3.9s
 - elixir: 5.5s
-- ruby: 12s
+- ruby: 11s
 - node: 14s
 - python/3: 16s
 
@@ -99,7 +99,7 @@ Pre-allocation of the list in `mutate` turned out to be slightly faster under `p
 #### Ruby
 Surprisingly performs better than default python even when using the class construct. Python had to migrate away from that to maintain some semblance of speed.
 
-Using `to_s` method as `uniq` condition couldn't manage to make it use the equality operators in a sensible way. I don't know ruby though.
+Using `to_s` method as `uniq` condition couldn't manage to make it use the equality operators in a sensible way. An almost hash like `to_s` is therefore much more performant.
 
 #### Node
 Lands bang in the middle of the two python implementations. Solid effort for having to implement its own duplicate element filter.

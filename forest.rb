@@ -12,7 +12,7 @@ class Forest
   end
 
   def to_s
-    "Forest (#{goats} #{wolves} #{lions})"
+    "#{goats} #{wolves} #{lions}"
   end
 
   def is_stable
