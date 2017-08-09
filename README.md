@@ -1,4 +1,7 @@
 # Magic Forest Benchmarks
+[![build status](https://secure.travis-ci.org/clux/magic-forest.svg)](http://travis-ci.org/clux/magic-forest)
+[![docker image info](https://images.microbadger.com/badges/image/clux/magic-forest.svg)](http://microbadger.com/images/clux/magic-forest)
+
 Personal comparisons of languages based on what I consider idiomatic use of these languages. Don't read too much into these.
 
 This is based on the old blog post [Fast Functional Goats, Lions and Wolves](http://unriskinsight.blogspot.co.uk/2014/06/fast-functional-goats-lions-and-wolves.html) which gathered some publicity in 2014, but was broken by people finding an analytical solution.
