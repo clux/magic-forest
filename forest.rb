@@ -24,7 +24,6 @@ class Forest
   end
 end
 
-
 def mutate(forests)
   xs = []
   for f in forests do

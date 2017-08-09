@@ -58,7 +58,7 @@ fortran -O3 forest.f08 -o fortranforest
 time ./fortranforest 305 295 300
 
 # ruby
-./time forest.rb 305 295 300
+time forest.rb 305 295 300
 ```
 
 ## Personal Results
@@ -99,7 +99,7 @@ Pre-allocation of the list in `mutate` turned out to be slightly faster under `p
 #### Ruby
 Surprisingly performs better than default python even when using the class construct. Python had to migrate away from that to maintain some semblance of speed.
 
-Using `to_s` method as `uniq` condition couldn't manage to make it use the equality operators in a sensible way. An almost hash like `to_s` is therefore much more performant.
+Using `to_s` method as `uniq` condition couldn't manage to make it use the equality operators in a sensible way. A concise `to_s` is therefore much more performant.
 
 #### Node
 Lands bang in the middle of the two python implementations. Solid effort for having to implement its own duplicate element filter.
