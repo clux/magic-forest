@@ -115,6 +115,21 @@ index 85eb5bb..ddbe035 100755
 
  def solve(forest):
      forests = [forest]
+diff --git a/forest.rb b/forest.rb
+index cf22a7b..2fc8f43 100755
+--- a/forest.rb
++++ b/forest.rb
+@@ -33,7 +33,9 @@ def mutate(forests)
+     xs.push(Forest.new(f.goats + 1, f.wolves - 1, f.lions - 1))
+   end
+   ys = xs.keep_if {|f| f.is_valid }
+-  ys.uniq {|f| f.to_s }
++  res = ys.uniq {|f| f.to_s }
++  puts res
++  res
+ end
+
+ def solve(forest)
 diff --git a/forest.rs b/forest.rs
 index e73cc9e..007385a 100644
 --- a/forest.rs

@@ -96,6 +96,11 @@ Current solution is the shortest one (shorter than the shortest haskell one we'v
 
 Pre-allocation of the list in `mutate` turned out to be slightly faster under `python`, but somehow slower under `pypy`, go figure.
 
+#### Ruby
+Surprisingly performs better than default python even when using the class construct. Python had to migrate away from that to maintain some semblance of speed.
+
+Using `to_s` method as `uniq` condition couldn't manage to make it use the equality operators in a sensible way. I don't know ruby though.
+
 #### Node
 Lands bang in the middle of the two python implementations. Solid effort for having to implement its own duplicate element filter.
 
