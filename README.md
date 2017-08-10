@@ -67,7 +67,7 @@ time forest.rb 305 295 300
 ```
 
 ## Personal Results
-Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 6.11 LTS, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8, elixir 1.5.0, ruby 2.4.
+Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 8.3, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8, elixir 1.5.0, ruby 2.4.
 
 - c++/gcc: 295ms
 - rust: 300ms
@@ -77,8 +77,8 @@ Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable ru
 - haskell: 2.7s
 - python/pypy3: 3.9s
 - elixir: 5.5s
+- node: 6.7s
 - ruby: 11s
-- node: 14s
 - python/3: 16s
 
 All results are based on the above input data `305 295 300`, where the exponential nature of the problem really highlights the differences between languages.
