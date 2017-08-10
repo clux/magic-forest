@@ -10,7 +10,9 @@ This is based on the old blog post [Fast Functional Goats, Lions and Wolves](htt
 Only the brute forcing solution is used for all languages.
 
 - Build up the entire tree mutation by mutation from the initial forest
-- In mutation step, create all possible variations, then filter out invalids, then sort and remove duplicates (don't use sets before the filter)
+- Perform *all* the insertions into a vector or similar, *then* filter out invalids
+- At the end of `mutate` remove duplicates (either by converting to a set here, or using a sort + erase combo)
+- Do not use sets *before* you have done inserts and filter in `mutate`
 - Continue doing mutation steps until a stable solution is found
 - No third party libraries
 - Language idiomatic solution (no obscure/largely expanding optimizations)
@@ -147,5 +149,35 @@ Perhaps the least magic implementation of the bunch. It's not as nice or short a
 
 Wrapping `forest.rs` inside a `cargo` built project provided no change in performance when building with `cargo build --release` despite more numerous compiler/linker flags.
 
-#### Meta
-Interestingly, all the compiled languages apart from C++ were able to automatically derive the obvious implementations of equality, comparison and a sensible print representation.
+#### A note on sets vs. sort + dedup
+Both C++ and rust versions can be made somewhat shorter by having the `mutate` function return a set, in C++:
+
+```cpp
+set<Forest> mutate(const set<Forest> &curr) {
+  vector<Forest> next;
+  next.reserve(curr.size() * 3);
+  for (auto f : curr) {
+    next.emplace_back(f.goats - 1, f.wolves - 1, f.lions + 1);
+    next.emplace_back(f.goats - 1, f.wolves + 1, f.lions - 1);
+    next.emplace_back(f.goats + 1, f.wolves - 1, f.lions - 1);
+  }
+  auto valid_end = remove_if(begin(next), end(next), is_invalid);
+  return set<Forest> s(next.begin(), valid_end);
+}
+```
+
+and in rust:
+
+```rust
+fn mutate(forests: BTreeSet<Forest>) -> BTreeSet<Forest> {
+    let mut next = Vec::with_capacity(forests.len() * 3);
+    for x in forests.into_iter() {
+        next.push(Forest::new(x.goats - 1, x.wolves - 1, x.lions + 1));
+        next.push(Forest::new(x.goats - 1, x.wolves + 1, x.lions - 1));
+        next.push(Forest::new(x.goats + 1, x.wolves - 1, x.lions - 1));
+    }
+    next.into_iter().filter(|x| x.is_valid()).collect()
+}
+```
+
+Both of these still obey the rules (and some languages implement this strategy), but quick investigation reveals that to be more than twice as expensive as just using a sort into a linear erase combo.
