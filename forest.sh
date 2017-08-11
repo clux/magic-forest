@@ -22,5 +22,5 @@ solve() {
   done
 }
 
-# echo "Forest $1 $2 $3"
+echo "Forest $1 $2 $3"
 echo "Forest $1 $2 $3" | solve
