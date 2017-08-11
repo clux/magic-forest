@@ -21,6 +21,7 @@ run_all() {
   echo "NodeJS" && time ./forest.js 305 295 300
   echo "Ruby" && time ./forest.rb 305 295 300
   echo "Python 3" && time ./forest.py 305 295 300
+  echo "Shell" && time ./forest.sh 305 295 300
 }
 
 main() {
