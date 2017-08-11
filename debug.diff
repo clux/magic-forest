@@ -144,3 +144,15 @@ index e73cc9e..007385a 100644
      next
  }
 
+diff --git a/forest.sh b/forest.sh
+index 5799a20..fca8b5e 100755
+--- a/forest.sh
++++ b/forest.sh
+@@ -17,6 +17,7 @@ solve() {
+   next="$(cat)"
+   while [ -n "$next" ] && ! echo "$next" | is_stable; do
+     next="$(echo "$next" | mutate)"
++    echo "$next"
+   done
+ }
+

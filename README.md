@@ -138,9 +138,12 @@ Deleting or adding the default constructor of forest actually gained 10% perform
 gcc seems to be consistently around 5% faster than clang.
 
 #### Fortran
-A solution 3x longer than the dubious second place holder in LOC; `go`. It stays within the rules and implements its own quick sort, and as far as Fortran goes, it's remarkably understandable. It was graciously offered by @jchildren in [#4](https://github.com/clux/magic-forest/pull/4).
+A solution 3x longer than the dubious second place holder in LOC; `go`. It stays within the rules and implements its own quick sort, and as far as Fortran goes, it's remarkably understandable. It was graciously offered by [@jchildren](https://github.com/jchildren) in [#4](https://github.com/clux/magic-forest/pull/4).
 
 It's up there in the top 3 languages, but it still performs worse than cpp/rust by a factor of two. It's certainly as close to the metal as these languages, so there should perhaps be room for improvement here without going too nuts.
+
+#### Bash/Awk
+Stream implementation using `awk` and `grep` because [@Thhethssmuz](https://github.com/Thhethssmuz) thought it was possible. Turns out it's not too terrible. Slightly different semantics because we are working entirely with streams, but I'll have to allow it. It's the shortest solution here.
 
 #### Rust
 Rust impressively ~ties C++ with completely normal code. It all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance.
