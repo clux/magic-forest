@@ -14,11 +14,9 @@ mutate() {
 }
 
 solve() {
-  tmp="$(cat)"
-
-  while [ -n "$tmp" ] && ! echo "$tmp" | is_stable; do
-    tmp="$(echo "$tmp" | mutate)"
-    # echo "$tmp"
+  next="$(cat)"
+  while [ -n "$next" ] && ! echo "$next" | is_stable; do
+    next="$(echo "$next" | mutate)"
   done
 }
 
