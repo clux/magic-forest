@@ -5,45 +5,36 @@ struct Forest {
     lions: i32,
 }
 
-impl Forest {
-    fn new(goats: i32, wolves: i32, lions: i32) -> Forest {
-        Forest { goats, wolves, lions }
-    }
+fn is_valid(f: &Forest) -> bool {
+    f.goats >= 0 && f.wolves >= 0 && f.lions >= 0
+}
 
-    fn is_stable(&self) -> bool {
-       match *self {
-           Forest { goats: 0, wolves: 0, lions: _ } |
-           Forest { goats: 0, wolves: _, lions: 0 } |
-           Forest { goats: _, wolves: 0, lions: 0 } => true,
-           _ => false
-       }
-    }
-
-    fn is_valid(&self) -> bool {
-        self.goats >= 0 && self.wolves >= 0 && self.lions >= 0
-    }
+fn is_stable(f: &Forest) -> bool {
+    (f.goats == 0 && (f.wolves == 0 || f.lions == 0)) || (f.wolves == 0 && f.lions == 0)
 }
 
 fn mutate(forests: Vec<Forest>) -> Vec<Forest> {
     let mut next = Vec::with_capacity(forests.len() * 3);
-    for x in forests.into_iter() {
-        next.push(Forest::new(x.goats - 1, x.wolves - 1, x.lions + 1));
-        next.push(Forest::new(x.goats - 1, x.wolves + 1, x.lions - 1));
-        next.push(Forest::new(x.goats + 1, x.wolves - 1, x.lions - 1));
+    for f in forests.into_iter() {
+        next.extend_from_slice(&[
+            Forest { goats: f.goats - 1, wolves: f.wolves - 1, lions: f.lions + 1 },
+            Forest { goats: f.goats - 1, wolves: f.wolves + 1, lions: f.lions - 1 },
+            Forest { goats: f.goats + 1, wolves: f.wolves - 1, lions: f.lions - 1 },
+        ]);
     }
-    next.retain(|x| x.is_valid());
+    next.retain(is_valid);
     next.sort();
     next.dedup();
     next
 }
 
 fn solve(forest: Forest) -> Vec<Forest> {
-    let mut xs = vec![forest];
-    while !xs.is_empty() && !xs.iter().any(|x| x.is_stable()) {
-        xs = mutate(xs)
+    let mut res = vec![forest];
+    while !res.is_empty() && !res.iter().any(is_stable) {
+        res = mutate(res)
     }
-    xs.retain(|f| f.is_stable());
-    xs
+    res.retain(is_stable);
+    res
 }
 
 fn main() {

@@ -9,8 +9,8 @@ build_all() {
 }
 
 verify_output() {
-  [[ $(./cppforest 55 45 50 | wc -l) == 28866 ]]
   [[ $(./rustforest 55 45 50 | wc -l) == 28866 ]]
+  [[ $(./cppforest 55 45 50 | wc -l) == 28866 ]]
   [[ $(./fortranforest 55 45 50 | wc -l) == 28868 ]]
   [[ $(./goforest 55 45 50 | wc -l) == 28866 ]]
   [[ $(./ghcforest 55 45 50 2>&1 | wc -l) == 28866 ]]

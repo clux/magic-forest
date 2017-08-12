@@ -69,8 +69,8 @@ time forest.rb 305 295 300
 ## Personal Results
 Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 8.3, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8, elixir 1.5.0, ruby 2.4.
 
+- rust: 295ms
 - c++/gcc: 295ms
-- rust: 300ms
 - c++/llvm: 310ms
 - fortran: 750ms
 - go: 1.150s
