@@ -11,21 +11,21 @@ index caf6e2b..57be0ae 100644
 +  }
    return next;
  }
-
+ 
 diff --git a/forest.ex b/forest.ex
 index 9499782..939e0c6 100755
 --- a/forest.ex
 +++ b/forest.ex
 @@ -18,7 +18,9 @@ defmodule Forest do
    end
-
+ 
    def mutate(xs) do
 -    Enum.flat_map(xs, &mutations/1) |> Enum.filter(&is_valid/1) |> Enum.uniq()
 +    res = Enum.flat_map(xs, &mutations/1) |> Enum.filter(&is_valid/1) |> Enum.uniq()
 +    Enum.each(res, fn(x) -> IO.puts "Mutation: " <> (inspect x) end)
 +    res
    end
-
+ 
    def solve(forest) do
 diff --git a/forest.f08 b/forest.f08
 index cf904b8..f7b5f75 100644
@@ -40,7 +40,7 @@ index cf904b8..f7b5f75 100644
 +            print *, next(i)
 +        end do
      end function mutate
-
+ 
      function solve(initial) result(solution)
 diff --git a/forest.go b/forest.go
 index c93e48e..f7d198e 100644
@@ -55,22 +55,22 @@ index c93e48e..f7d198e 100644
 +	}
  	return next
  }
-
+ 
 diff --git a/forest.hs b/forest.hs
 index 23fa4a7..56701b2 100644
 --- a/forest.hs
 +++ b/forest.hs
 @@ -2,6 +2,7 @@ module Main where
-
+ 
  import qualified Data.Set as Set
  import System.Environment
 +import Debug.Trace
-
+ 
  data Forest = Forest
    { goats  :: !Int
 @@ -27,7 +28,7 @@ ordNub l = go Set.empty l
                                        else x : go (Set.insert x s) xs
-
+ 
  mutate :: [Forest] -> [Forest]
 -mutate xs = ordNub . filter isValid . concatMap f $ xs
 +mutate xs = map traceShowId . ordNub . filter isValid . concatMap f $ xs
@@ -83,7 +83,7 @@ index 058b64a..2109c2c 100755
 +++ b/forest.js
 @@ -23,12 +23,16 @@ var notFirstOrPrevious = function (f, i, ary) {
  };
-
+ 
  var mutate = function (forests) {
 -  return forests.reduce(function (acc, f) {
 +  let next = forests.reduce(function (acc, f) {
@@ -97,7 +97,7 @@ index 058b64a..2109c2c 100755
 +  });
 +  return next;
  };
-
+ 
  var solve = function (forest) {
 diff --git a/forest.py b/forest.py
 index 85eb5bb..ddbe035 100755
@@ -112,7 +112,7 @@ index 85eb5bb..ddbe035 100755
 +    for x in res:
 +        print('Mutated: {}'.format(x))
 +    return res
-
+ 
  def solve(forest):
      forests = [forest]
 diff --git a/forest.rb b/forest.rb
@@ -128,14 +128,14 @@ index 2874102..850dc3f 100755
 +  puts res
 +  res
  end
-
+ 
  def solve(forest)
 diff --git a/forest.rs b/forest.rs
-index e73cc9e..007385a 100644
+index d0bf774..7a5369c 100644
 --- a/forest.rs
 +++ b/forest.rs
-@@ -34,6 +34,9 @@ fn mutate(forests: Vec<Forest>) -> Vec<Forest> {
-     next.retain(|x| x.is_valid());
+@@ -25,6 +25,9 @@ fn mutate(forests: Vec<Forest>) -> Vec<Forest> {
+     next.retain(is_valid);
      next.sort();
      next.dedup();
 +    for x in next.clone() {
@@ -143,16 +143,16 @@ index e73cc9e..007385a 100644
 +    }
      next
  }
-
+ 
 diff --git a/forest.sh b/forest.sh
-index 5799a20..fca8b5e 100755
+index 68d8377..80df394 100755
 --- a/forest.sh
 +++ b/forest.sh
-@@ -17,6 +17,7 @@ solve() {
+@@ -16,6 +16,7 @@ solve() {
    next="$(cat)"
    while [ -n "$next" ] && ! echo "$next" | is_stable; do
-     next="$(echo "$next" | mutate)"
+     next="$(echo "$next" | mutate | is_valid | sort -u)"
 +    echo "$next"
    done
  }
-
+ 

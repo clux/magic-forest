@@ -9,14 +9,13 @@ is_valid() {
 }
 
 mutate() {
-  awk '{print $1" "$2-1" "$3-1" "$4+1"\n"$1" "$2-1" "$3+1" "$4-1"\n"$1" "$2+1" "$3-1" "$4-1}' | \
-    is_valid | sort -u
+  awk '{print $1" "$2-1" "$3-1" "$4+1"\n"$1" "$2-1" "$3+1" "$4-1"\n"$1" "$2+1" "$3-1" "$4-1}'
 }
 
 solve() {
   next="$(cat)"
   while [ -n "$next" ] && ! echo "$next" | is_stable; do
-    next="$(echo "$next" | mutate)"
+    next="$(echo "$next" | mutate | is_valid | sort -u)"
   done
 }
 

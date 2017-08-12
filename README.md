@@ -149,6 +149,8 @@ It's up there in the top 3 languages, but it still performs worse than cpp/rust 
 #### Shell
 Stream implementation using `awk` and `grep` because [@Thhethssmuz](https://github.com/Thhethssmuz) thought it was possible. Turns out it's not too terrible. Slightly different semantics because we are working entirely with streams, but I'll have to allow it. It's the shortest solution here.
 
+Interestingly the while condition is actually what prints the result to stdout so that serves as a dual "filter out unstable solution" and "end the while loop" at the same time, saving us any extra processing in solve after the while loop.
+
 #### Rust
 Rust impressively ~ties C++ with completely normal code. It all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance.
 
