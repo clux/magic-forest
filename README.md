@@ -11,7 +11,7 @@ Only the brute forcing solution is used for all languages.
 
 - Build up the entire tree mutation by mutation from the initial forest
 - Perform *all* the insertions into a vector or similar, *then* filter out invalids
-- At the end of `mutate` remove duplicates (either by converting to a set here, or using a sort + erase combo)
+- At the end of `mutate` remove duplicates (converting to a set here / sort + erase combo / unique function)
 - Do not use sets *before* you have done inserts and filter in `mutate`
 - Continue doing mutation steps until a stable solution is found
 - No third party libraries
@@ -63,7 +63,10 @@ fortran -O3 forest.f08 -o fortranforest
 time ./fortranforest 305 295 300
 
 # ruby
-time forest.rb 305 295 300
+time ./forest.rb 305 295 300
+
+# shell
+time ./forest.sh 305 295 300
 ```
 
 ## Personal Results
@@ -73,13 +76,14 @@ Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable ru
 - c++/gcc: 295ms
 - c++/llvm: 310ms
 - fortran: 750ms
-- go: 1.150s
+- go: 1.1s
 - haskell: 2.7s
 - python/pypy3: 3.9s
 - elixir: 5.5s
 - node: 6.7s
 - ruby: 11s
 - python/3: 16s
+- shell: 35s
 
 All results are based on the above input data `305 295 300`, where the exponential nature of the problem really highlights the differences between languages.
 
@@ -142,7 +146,7 @@ A solution 3x longer than the dubious second place holder in LOC; `go`. It stays
 
 It's up there in the top 3 languages, but it still performs worse than cpp/rust by a factor of two. It's certainly as close to the metal as these languages, so there should perhaps be room for improvement here without going too nuts.
 
-#### Bash/Awk
+#### Shell
 Stream implementation using `awk` and `grep` because [@Thhethssmuz](https://github.com/Thhethssmuz) thought it was possible. Turns out it's not too terrible. Slightly different semantics because we are working entirely with streams, but I'll have to allow it. It's the shortest solution here.
 
 #### Rust
