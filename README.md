@@ -76,7 +76,7 @@ Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable ru
 - c++/gcc: 295ms
 - c++/llvm: 310ms
 - fortran: 750ms
-- go: 1.1s
+- go: 1.4s
 - haskell: 2.7s
 - python/pypy3: 3.9s
 - elixir: 5.5s
@@ -122,11 +122,9 @@ It's also a clean functional solution. Historically native loops have been faste
 Using `Set` in the `reduce` is an option, but this caused my node to dump core after using all my heap memory.
 
 #### Go
-This version feels very similar to python.
+Relatively straight-forward implementation straightened out by [@jas2701](https://github.com/jas2701). Converts into set equivalents (maps with comparable keys) near the end rather than using a sort dedup and probably suffers a bit for it.
 
-There's a similar type of hack to sort and deduplicate an array, here using a map with throwaway values instead to force it out of key uniqueness. It's probably not super optimal, and it's also kind of cheating by deduplicating earlier than all other languages (in the creation phase). Not sure if abusing comparables like this is a common practice, but all other googled solutions for this were too large to consider.
-
-The explicit filters functions having to be inlined everywhere makes this solution the ugliest one of them all. It's vastly faster than any of the scripting languages though.
+The explicit filters functions having to be inlined everywhere makes this solution quite verbose, but it is faster than all but the super serious compiled languages.
 
 #### C++
 Modern cpp solution is very readable at only a few more lines than the scripting language counterparts. A bit of mental overhead on emplace, awkward iterator sempantics with back inserters, but even that is pretty standard modern cpp really.

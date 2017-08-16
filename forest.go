@@ -58,7 +58,6 @@ func solve(initialForest Forest) []Forest {
 	for len(forestSet) > 0 && !forestSet.AnyStable() {
 		forestSet = mutate(forestSet)
 	}
-	// return the stable remains
 	stable := make([]Forest, 0, len(forestSet))
 	for forest := range forestSet {
 		if forest.IsStable() {
