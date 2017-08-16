@@ -145,7 +145,9 @@ A solution 3x longer than the dubious second place holder in LOC; `go`. It stays
 It's up there in the top 3 languages, but it still performs worse than cpp/rust by a factor of two. It's certainly as close to the metal as these languages, so there should perhaps be room for improvement here without going too nuts.
 
 #### Shell
-Stream implementation using `awk` and `grep` because [@Thhethssmuz](https://github.com/Thhethssmuz) thought it was possible. Turns out it's not too terrible. Slightly different semantics because we are working entirely with streams, but I'll have to allow it. It's the shortest solution here.
+Stream implementation using `awk` and `grep` because [@Thhethssmuz](https://github.com/Thhethssmuz) thought it was possible. Turns out it's not too terrible, it's actually pretty amazing that it works as well as it does considering the overhead of forking around 3000 processes on the normal input set.
+
+ Slightly different semantics because we are working entirely with streams, but I'll have to allow it. It's the shortest solution here by far.
 
 Interestingly the while condition is actually what prints the result to stdout so that serves as a dual "filter out unstable solution" and "end the while loop" at the same time, saving us any extra processing in solve after the while loop.
 
