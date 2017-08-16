@@ -46,14 +46,14 @@ diff --git a/forest.go b/forest.go
 index c93e48e..f7d198e 100644
 --- a/forest.go
 +++ b/forest.go
-@@ -36,6 +36,9 @@ func mutate(forests []Forest) []Forest {
- 			next = append(next, k)
+@@ -50,6 +50,9 @@ func mutate(forestSet ForestSet) ForestSet {
+			newForestSet[forest] = struct{}{}
  		}
  	}
-+	for _, v := range next {
-+		fmt.Printf("Mutated: %v\n", v)
++	for mutation := range newForestSet {
++		fmt.Println(mutation)
 +	}
- 	return next
+	return newForestSet
  }
  
 diff --git a/forest.hs b/forest.hs

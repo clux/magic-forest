@@ -12,53 +12,57 @@ type Forest struct {
 	lions  int32
 }
 
-func (f Forest) forestStable() bool {
+func (f Forest) IsStable() bool {
 	if f.goats == 0 {
 		return f.wolves == 0 || f.lions == 0
 	}
 	return f.wolves == 0 && f.lions == 0
 }
 
-func (f Forest) forestInvalid() bool {
-	return f.goats < 0 || f.wolves < 0 || f.lions < 0
+func (f Forest) IsValid() bool {
+	return f.goats >= 0 && f.wolves >= 0 && f.lions >= 0
 }
 
-func mutate(forests []Forest) []Forest {
-	next := make([]Forest, 0, len(forests)*3)
-	m := make(map[Forest]struct{})
-	for _, v := range forests {
-		m[Forest{v.goats - 1, v.wolves - 1, v.lions + 1}] = struct{}{}
-		m[Forest{v.goats - 1, v.wolves + 1, v.lions - 1}] = struct{}{}
-		m[Forest{v.goats + 1, v.wolves - 1, v.lions - 1}] = struct{}{}
-	}
-	for k := range m {
-		if !k.forestInvalid() {
-			next = append(next, k)
+type ForestSet map[Forest]struct{}
+
+func (fs ForestSet) AnyStable() bool {
+	for forest := range fs {
+		if forest.IsStable() {
+			return true
 		}
 	}
-	return next
+	return false
 }
 
-func noStableForests(forests []Forest) bool {
-	for _, x := range forests {
-		if x.forestStable() {
-			return false
+func mutate(forestSet ForestSet) ForestSet {
+	potentials := make([]Forest, 0, len(forestSet)*3)
+	for forest := range forestSet {
+		potentials = append(potentials,
+			Forest{forest.goats - 1, forest.wolves - 1, forest.lions + 1},
+			Forest{forest.goats - 1, forest.wolves + 1, forest.lions - 1},
+			Forest{forest.goats + 1, forest.wolves - 1, forest.lions - 1},
+		)
+	}
+
+	newForestSet := make(ForestSet, len(potentials))
+	for _, forest := range potentials {
+		if forest.IsValid() {
+			newForestSet[forest] = struct{}{}
 		}
 	}
-	return true
+	return newForestSet
 }
 
-func solve(forest Forest) []Forest {
-	xs := make([]Forest, 0)
-	xs = append(xs, forest)
-	for len(xs) > 0 && noStableForests(xs) {
-		xs = mutate(xs)
+func solve(initialForest Forest) []Forest {
+	forestSet := ForestSet{initialForest: struct{}{}}
+	for len(forestSet) > 0 && !forestSet.AnyStable() {
+		forestSet = mutate(forestSet)
 	}
 	// return the stable remains
-	stable := make([]Forest, 0)
-	for _, x := range xs {
-		if x.forestStable() {
-			stable = append(stable, x)
+	stable := make([]Forest, 0, len(forestSet))
+	for forest := range forestSet {
+		if forest.IsStable() {
+			stable = append(stable, forest)
 		}
 	}
 	return stable
