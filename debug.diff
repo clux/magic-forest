@@ -43,17 +43,17 @@ index cf904b8..f7b5f75 100644
  
      function solve(initial) result(solution)
 diff --git a/forest.go b/forest.go
-index c93e48e..f7d198e 100644
+index c6f9e20..4e5326e 100644
 --- a/forest.go
 +++ b/forest.go
 @@ -50,6 +50,9 @@ func mutate(forestSet ForestSet) ForestSet {
-			newForestSet[forest] = struct{}{}
+ 			newForestSet[forest] = struct{}{}
  		}
  	}
 +	for mutation := range newForestSet {
 +		fmt.Println(mutation)
 +	}
-	return newForestSet
+ 	return newForestSet
  }
  
 diff --git a/forest.hs b/forest.hs
@@ -144,6 +144,18 @@ index d0bf774..7a5369c 100644
      next
  }
  
+diff --git a/forest.sc b/forest.sc
+index 519815a..f69b4b3 100644
+--- a/forest.sc
++++ b/forest.sc
+@@ -22,6 +22,7 @@ object Main {
+     var forests = Array(f)
+     while (!forests.isEmpty && !forests.exists(Forest.isStable)) {
+       forests = mutate(forests)
++      forests.foreach { s => println("Mutation: " + s )}
+     }
+     forests.filter(Forest.isStable)
+   }
 diff --git a/forest.sh b/forest.sh
 index 68d8377..80df394 100755
 --- a/forest.sh

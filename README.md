@@ -67,10 +67,14 @@ time ./forest.rb 305 295 300
 
 # shell
 time ./forest.sh 305 295 300
+
+# scala
+scalac -opt:_ forest.sc
+time scala Main 305 295 300
 ```
 
 ## Personal Results
-Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 8.3, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8, elixir 1.5.0, ruby 2.4.
+Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 8.3, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8, elixir 1.5.0, ruby 2.4, scala 2.12.
 
 - rust: 295ms
 - c++/gcc: 295ms
@@ -120,6 +124,13 @@ Lands bang in the middle of the two python implementations. Solid effort for hav
 It's also a clean functional solution. Historically native loops have been faster than stuff like `reduce`, but on node 6, using `forEach` with a correctly sized `new Array(3*forests.length)` as a starting point in `mutate` actually turned out to be quite detrimental to performance (14->18s).
 
 Using `Set` in the `reduce` is an option, but this caused my node to dump core after using all my heap memory.
+
+#### Scala
+Pretty clean and concise solution as you'd expect from a modern language, but this still feels super weird to write in. Implicit parameters and sometimes missing parens really creep me out.
+
+It performs decently for having compiled strict typing, but nothing to be particularly impressed by.
+
+The `distinct` method on `ArrayBuffer` appears to be the only way to deduplicate. Sorting first just slows it down. Aey implemented ordering appears not to be used, so a sensible default is probably derived from the case class instruction.
 
 #### Go
 Relatively straight-forward implementation straightened out by [@jas2701](https://github.com/jas2701). Converts into set equivalents (maps with comparable keys) near the end rather than using a sort dedup and probably suffers a bit for it.

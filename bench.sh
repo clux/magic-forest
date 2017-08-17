@@ -7,7 +7,7 @@ build_all() {
   clang++ -O3 -std=c++14 forest.cpp -o cppforestclang
   rustc -C opt-level=3 forest.rs -o rustforest
   gfortran -O3 forest.f08 -o fortranforest # creates more pointless files
-  scalac forest.sc # and more
+  scalac -opt:_ forest.sc # and more
 }
 
 run_all() {
