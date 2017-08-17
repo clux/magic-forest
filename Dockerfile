@@ -11,6 +11,7 @@ RUN pacman -Syu --noconfirm && pacman --noconfirm -S \
   patch \
   pypy3 \
   python \
+  scala \
   ruby \
   rust
 
