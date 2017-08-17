@@ -20,7 +20,7 @@ object Main {
   }
   def solve(f: Forest): Array[Forest] = {
     var forests = Array(f)
-    while (!forests.isEmpty && !forests.exists(Forest.isStable)) {
+    while (forests.nonEmpty && !forests.exists(Forest.isStable)) {
       forests = mutate(forests)
     }
     forests.filter(Forest.isStable)
