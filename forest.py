@@ -27,11 +27,11 @@ def solve(forest):
 if __name__ == '__main__':
     args = sys.argv
     if len(args) != 4:
-        print('USAGE: {} <goats> <wolves> <lions>'.format(args[0]))
+        print(f'USAGE: {args[0]} <goats> <wolves> <lions>')
         sys.exit(1)
 
     initial = Forest(int(args[1]), int(args[2]), int(args[3]))
-    print('Initial: {}'.format(initial))
+    print(f'Initial: {initial}')
 
     for f in solve(initial):
-        print('Solution: {}'.format(f))
+        print(f'Solution: {f}')
