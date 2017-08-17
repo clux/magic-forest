@@ -11,7 +11,7 @@ RUN pacman -Syu --noconfirm && pacman --noconfirm -S \
   patch \
   pypy3 \
   python \
-  scala \
+  scala jre8-openjdk \
   ruby \
   rust
 
