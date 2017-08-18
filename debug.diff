@@ -11,21 +11,21 @@ index caf6e2b..57be0ae 100644
 +  }
    return next;
  }
- 
+
 diff --git a/forest.ex b/forest.ex
 index 9499782..939e0c6 100755
 --- a/forest.ex
 +++ b/forest.ex
 @@ -18,7 +18,9 @@ defmodule Forest do
    end
- 
+
    def mutate(xs) do
 -    Enum.flat_map(xs, &mutations/1) |> Enum.filter(&is_valid/1) |> Enum.uniq()
 +    res = Enum.flat_map(xs, &mutations/1) |> Enum.filter(&is_valid/1) |> Enum.uniq()
 +    Enum.each(res, fn(x) -> IO.puts "Mutation: " <> (inspect x) end)
 +    res
    end
- 
+
    def solve(forest) do
 diff --git a/forest.f08 b/forest.f08
 index cf904b8..f7b5f75 100644
@@ -40,7 +40,7 @@ index cf904b8..f7b5f75 100644
 +            print *, next(i)
 +        end do
      end function mutate
- 
+
      function solve(initial) result(solution)
 diff --git a/forest.go b/forest.go
 index c6f9e20..4e5326e 100644
@@ -55,22 +55,22 @@ index c6f9e20..4e5326e 100644
 +	}
  	return newForestSet
  }
- 
+
 diff --git a/forest.hs b/forest.hs
 index 23fa4a7..56701b2 100644
 --- a/forest.hs
 +++ b/forest.hs
 @@ -2,6 +2,7 @@ module Main where
- 
+
  import qualified Data.Set as Set
  import System.Environment
 +import Debug.Trace
- 
+
  data Forest = Forest
    { goats  :: !Int
 @@ -27,7 +28,7 @@ ordNub l = go Set.empty l
                                        else x : go (Set.insert x s) xs
- 
+
  mutate :: [Forest] -> [Forest]
 -mutate xs = ordNub . filter isValid . concatMap f $ xs
 +mutate xs = map traceShowId . ordNub . filter isValid . concatMap f $ xs
@@ -83,7 +83,7 @@ index 058b64a..2109c2c 100755
 +++ b/forest.js
 @@ -23,12 +23,16 @@ var notFirstOrPrevious = function (f, i, ary) {
  };
- 
+
  var mutate = function (forests) {
 -  return forests.reduce(function (acc, f) {
 +  let next = forests.reduce(function (acc, f) {
@@ -97,7 +97,7 @@ index 058b64a..2109c2c 100755
 +  });
 +  return next;
  };
- 
+
  var solve = function (forest) {
 diff --git a/forest.py b/forest.py
 index 85eb5bb..ddbe035 100755
@@ -112,7 +112,7 @@ index 85eb5bb..ddbe035 100755
 +    for x in res:
 +        print('Mutated: {}'.format(x))
 +    return res
- 
+
  def solve(forest):
      forests = [forest]
 diff --git a/forest.rb b/forest.rb
@@ -128,7 +128,7 @@ index 2874102..850dc3f 100755
 +  puts res
 +  res
  end
- 
+
  def solve(forest)
 diff --git a/forest.rs b/forest.rs
 index d0bf774..7a5369c 100644
@@ -143,19 +143,20 @@ index d0bf774..7a5369c 100644
 +    }
      next
  }
- 
+
 diff --git a/forest.sc b/forest.sc
-index 519815a..f69b4b3 100644
+index c54cd81..c8a9fec 100644
 --- a/forest.sc
 +++ b/forest.sc
 @@ -22,6 +22,7 @@ object Main {
      var forests = Array(f)
-     while (!forests.isEmpty && !forests.exists(Forest.isStable)) {
+     while (forests.nonEmpty && !forests.exists(Forest.isStable)) {
        forests = mutate(forests)
 +      forests.foreach { s => println("Mutation: " + s )}
      }
      forests.filter(Forest.isStable)
    }
+
 diff --git a/forest.sh b/forest.sh
 index 68d8377..80df394 100755
 --- a/forest.sh
@@ -167,4 +168,18 @@ index 68d8377..80df394 100755
 +    echo "$next"
    done
  }
- 
+
+diff --git a/forest.kt b/forest.kt
+index 84dc44e..512d44b 100644
+--- a/forest.kt
++++ b/forest.kt
+@@ -21,6 +21,9 @@ fun solve(f: Forest) : List<Forest> {
+   var forests = List<Forest>(1, {f})
+   while (forests.any() && !forests.any(Forest::isStable)) {
+     forests = mutate(forests)
++    for (fm: Forest in forests) {
++      println("Mutation: ${fm}")
++    }
+   }
+   return forests.filter(Forest::isStable)
+ }

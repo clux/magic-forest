@@ -2,7 +2,7 @@ sudo: false
 services:
 - docker
 before_script:
-- docker pull clux/magic-forest
+- docker build -t clux/magic-forest .
 script:
 - docker run --rm -v $PWD:/volume -w /volume -t clux/magic-forest ./bench.sh
 - docker run --rm -v $PWD:/volume -w /volume -t clux/magic-forest ./test.sh

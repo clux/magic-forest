@@ -71,6 +71,10 @@ time ./forest.sh 305 295 300
 # scala
 scalac -opt:_ forest.sc
 time scala Main 305 295 300
+
+# kotlin
+kotlinc forest.kt
+time kotlin ForestKt 305 295 300
 ```
 
 ## Personal Results
@@ -79,8 +83,10 @@ Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable ru
 - rust: 295ms
 - c++/gcc: 295ms
 - c++/llvm: 310ms
+- kotlin: 670ms
 - fortran: 750ms
 - go: 1.4s
+- scala: 2.1s
 - haskell: 2.7s
 - python/pypy3: 3.9s
 - elixir: 5.5s
@@ -131,6 +137,13 @@ Pretty clean and concise solution as you'd expect from a modern language, but th
 It performs decently for having compiled strict typing, but nothing to be particularly impressed by.
 
 The `distinct` method on `ArrayBuffer` appears to be the only way to deduplicate. Sorting first just slows it down. Aey implemented ordering appears not to be used, so a sensible default is probably derived from the case class instruction.
+
+#### Kotlin
+Fundamentally equivalent semantically to the Scala solution, but performs 3x better.
+
+Equality and a print implementation is auto-derived for a `data class` so there's fundamentally little to do. You would think that this makes it a good 1-1 relation with Scala's `case class` statements, but performance wise, I guess not.
+
+There's a lot of very specific object orientation based syntax in the language that weirds me aout a bit, and and the collection constructors feels inconsistent between each other, but the language generally reads very nicely.
 
 #### Go
 Relatively straight-forward implementation straightened out by [@jas2701](https://github.com/jas2701). Converts into set equivalents (maps with comparable keys) near the end rather than using a sort dedup and probably suffers a bit for it.

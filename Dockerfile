@@ -7,6 +7,7 @@ RUN pacman -Syu --noconfirm && pacman --noconfirm -S \
   gcc-fortran \
   ghc-static \
   go \
+  kotlin \
   nodejs \
   patch \
   pypy3 \

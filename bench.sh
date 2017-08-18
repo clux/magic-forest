@@ -8,6 +8,7 @@ build_all() {
   rustc -C opt-level=3 forest.rs -o rustforest
   gfortran -O3 forest.f08 -o fortranforest # creates more pointless files
   scalac -opt:_ forest.sc # and more
+  kotlinc forest.kt
 }
 
 run_all() {
@@ -17,6 +18,7 @@ run_all() {
   echo "Fortran" && time ./fortranforest 305 295 300
   echo "Go" && time ./goforest 305 295 300
   echo "Scala" && time scala Main 305 295 300
+  echo "Kotlin" && time kotlin ForestKt 305 295 300
   echo "Haskell" && time ./ghcforest 305 295 300
   echo "Python (PYPY3)" && time pypy3 forest.py 305 295 300
   echo "Elixir" && time ./forest.ex 305 295 300

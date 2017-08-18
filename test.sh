@@ -7,6 +7,7 @@ build_all() {
   rustc -C opt-level=3 forest.rs -o rustforest
   gfortran -O3 forest.f08 -o fortranforest
   scalac forest.sc
+  kotlinc forest.kt
 }
 
 verify_output() {
@@ -15,6 +16,7 @@ verify_output() {
   [[ $(./fortranforest 55 45 50 | wc -l) == 28868 ]]
   [[ $(./goforest 55 45 50 | wc -l) == 28866 ]]
   [[ $(scala Main 55 45 50 | wc -l) == 28866 ]]
+  [[ $(kotlin ForestKt 55 45 50 | wc -l) == 28866 ]]
   [[ $(./ghcforest 55 45 50 2>&1 | wc -l) == 28866 ]]
   [[ $(./forest.js 55 45 50 | wc -l) == 28866 ]]
   [[ $(./forest.py 55 45 50 | wc -l) == 28866 ]]
