@@ -1,13 +1,14 @@
 #!/bin/bash
 
 build_all() {
+  mkdir -p scalatmp # scala clashes with kotlin
   go build -o goforest forest.go
   ghc -O3 forest.hs -o ghcforest # creates forest.{hi,o} pointlessly
   g++ -O3 -std=c++14 forest.cpp -o cppforest
   clang++ -O3 -std=c++14 forest.cpp -o cppforestclang
   rustc -C opt-level=3 forest.rs -o rustforest
   gfortran -O3 forest.f08 -o fortranforest # creates more pointless files
-  scalac -opt:_ forest.sc # and more
+  scalac -d scalatmp/ -opt:_ forest.sc # and more
   kotlinc forest.kt
 }
 
@@ -17,7 +18,7 @@ run_all() {
   echo "C++ (llvm)" && time ./cppforestclang 305 295 300
   echo "Fortran" && time ./fortranforest 305 295 300
   echo "Go" && time ./goforest 305 295 300
-  echo "Scala" && time scala Main 305 295 300
+  echo "Scala" && cd scalatmp && time scala Main 305 295 300 && cd -
   echo "Kotlin" && time kotlin ForestKt 305 295 300
   echo "Haskell" && time ./ghcforest 305 295 300
   echo "Python (PYPY3)" && time pypy3 forest.py 305 295 300
