@@ -1,6 +1,5 @@
 # Magic Forest Benchmarks
 [![build status](https://secure.travis-ci.org/clux/magic-forest.svg)](http://travis-ci.org/clux/magic-forest)
-[![docker image info](https://images.microbadger.com/badges/image/clux/magic-forest.svg)](http://microbadger.com/images/clux/magic-forest)
 
 Personal comparisons of languages based on what I consider idiomatic use of these languages. Don't read too much into these.
 
@@ -78,7 +77,7 @@ time kotlin ForestKt 305 295 300
 ```
 
 ## Personal Results
-Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 8.3, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8, elixir 1.5.0, ruby 2.4, scala 2.12.
+Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 8.3, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8, elixir 1.5.0, ruby 2.4, kotlin 1.1.3, scala 2.12 (jre-1.8).
 
 - rust: 295ms
 - c++/gcc: 295ms

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 build_all() {
-  mkdir scalatmp # scala clashes with kotlin
+  mkdir -p scalatmp # scala clashes with kotlin
   go build -o goforest forest.go
   ghc -O forest.hs -o ghcforest
   g++ -O3 -std=c++14 forest.cpp -o cppforest
