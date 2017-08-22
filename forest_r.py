@@ -17,8 +17,8 @@ def mutate(forests):
     forest_map = {}
     for f in next_forests:
         forest_map[f] = None
-    return list(forest_map.keys())
- 
+    return [f for f in forest_map.keys() if is_valid(f)]
+
 
 def any(iterable):
     for i in iterable:
