@@ -9,6 +9,7 @@ build_all() {
   gfortran -O3 forest.f08 -o fortranforest
   scalac -d scalatmp/ forest.sc
   kotlinc forest.kt
+  cp forest.rpy forest-r.py && rpython --output rpyforest forest-r.py
 }
 
 verify_output() {
@@ -24,6 +25,7 @@ verify_output() {
   [[ $(./forest.sh 55 45 50 | wc -l) == 28866 ]]
   [[ $(./forest.rb 55 45 50 | wc -l) == 28866 ]]
   [[ $(./forest.ex 55 45 50 | wc -l) == 28866 ]]
+  [[ $(./rpyforest 55 45 50 | wc -l) == 28866 ]]
 }
 
 main() {
