@@ -1,4 +1,19 @@
-from rpython.rlib.jit import JitDriver, purefunction
+try:
+    # Maintain interpreter compatibility when running under CPython
+    from rpython.rlib.jit import JitDriver, purefunction
+except ImportError:
+    class JitDriver(object):
+        def __init__(self, **kwargs):
+            pass
+
+        def jit_merge_point(self, **kwargs):
+            pass
+
+        def can_enter_jit(self, **kwargs):
+            pass
+
+    def purefunction(f):
+        return f
 
 jitdriver = JitDriver(greens=['forests'], reds=[])
 
