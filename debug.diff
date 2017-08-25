@@ -188,7 +188,7 @@ diff --git a/forest.rpy b/forest.rpy
 index 7c7acc4..42f5c8c 100755
 --- a/forest.rpy
 +++ b/forest.rpy
-@@ -50,6 +50,8 @@ def solve(forest):
+@@ -50,6 +65,8 @@ def solve(forest):
      while any(forests) and not has_stable_forest(forests):
          jitdriver.jit_merge_point(forests=forests)
          forests = mutate(forests)

@@ -10,6 +10,7 @@ build_all() {
   gfortran -O3 forest.f08 -o fortranforest # creates more pointless files
   scalac -d scalatmp/ -opt:_ forest.sc # and more
   kotlinc forest.kt
+  cp forest.rpy forest-r.py && rpython --output rpyforest forest-r.py
 }
 
 run_all() {
@@ -27,6 +28,7 @@ run_all() {
   echo "Ruby" && time ./forest.rb 305 295 300
   echo "Python 3" && time ./forest.py 305 295 300
   echo "Shell" && time ./forest.sh 305 295 300
+  echo "RPython" && time ./rpyforest 305 295 300
 }
 
 main() {
