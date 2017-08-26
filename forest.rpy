@@ -1,15 +1,19 @@
+GOATS = 0
+WOLVES = 1
+LIONS = 2
+
 def is_stable(f):
-    return (f[0] == 0 and (f[1] == 0 or f[2] == 0)) or (f[1] == 0 and f[2] == 0)
+    return (f[GOATS] == 0 and (f[WOLVES] == 0 or f[LIONS] == 0)) or (f[WOLVES] == 0 and f[LIONS] == 0)
 
 def is_valid(f):
-    return f[0] >= 0 and f[1] >= 0 and f[2] >= 0
+    return f[GOATS] >= 0 and f[WOLVES] >= 0 and f[LIONS] >= 0
 
 def mutate(forests):
     next_forests = []
     for f in forests:
-        next_forests.append((f[0] - 1, f[1] - 1, f[2] + 1))
-        next_forests.append((f[0] - 1, f[1] + 1, f[2] - 1))
-        next_forests.append((f[0] + 1, f[1] - 1, f[2] - 1))
+        next_forests.append((f[GOATS] - 1, f[WOLVES] - 1, f[LIONS] + 1))
+        next_forests.append((f[GOATS] - 1, f[WOLVES] + 1, f[LIONS] - 1))
+        next_forests.append((f[GOATS] + 1, f[WOLVES] - 1, f[LIONS] - 1))
 
     # rpython has no `set()`
     forest_map = {}
