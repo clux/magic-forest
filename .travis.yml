@@ -4,8 +4,8 @@ services:
 before_script:
 - docker build -t clux/magic-forest .
 script:
-- docker run -u0 --rm -v $PWD:/volume -w /volume -t clux/magic-forest ./bench.sh
-- docker run -u0 --rm -v $PWD:/volume -w /volume -t clux/magic-forest ./test.sh
+- docker run --rm -v $PWD:/volume -w /volume -t clux/magic-forest ./bench.sh
+- docker run --rm -v $PWD:/volume -w /volume -t clux/magic-forest ./test.sh
 notifications:
   email:
     on_success: change
