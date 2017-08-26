@@ -31,6 +31,10 @@ time ./forest.py 305 295 300
 # python (pypy)
 time pypy forest.py 305 295 300
 
+# python (rpython)
+cp forest.rpy forest-r.py && rpython --output rpyforest forest-r.py
+time ./rpyforest 305 295 300
+
 # node
 time ./forest.js 305 295 300
 
@@ -74,6 +78,7 @@ time scala Main 305 295 300
 # kotlin
 kotlinc forest.kt
 time kotlin ForestKt 305 295 300
+
 ```
 
 ## Personal Results
@@ -83,6 +88,7 @@ Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable ru
 - c++/gcc: 295ms
 - c++/llvm: 310ms
 - kotlin: 670ms
+- rpython: 743ms
 - fortran: 750ms
 - go: 1.4s
 - scala: 2.1s
@@ -117,6 +123,11 @@ Varies greatly based on how you implement this. A `class Forest` with it's own `
 Current solution is the shortest one (shorter than the shortest haskell one we've had), and performs solidly under pypy for an interpretted language.
 
 Pre-allocation of the list in `mutate` turned out to be slightly faster under `python`, but somehow slower under `pypy`, go figure.
+
+#### RPython
+Worthy of it's own paragraph, even though it's a subset of python2. If nothing else, it showcases how fast you can actually make python if you really want to go to insane lengths. It's now the slowest way to compile any of the solutions here, but it does beat out fortran in runtime. This implementation was provided by [@bencord0](https://github.com/bencord0).
+
+A JIT was tested in [#11](https://github.com/clux/magic-forest/pull/11), but with the additional expanse of even more compile time, the smallish improvements were discarded.
 
 #### Ruby
 Surprisingly performs better than default python even when using the class construct. Python had to migrate away from that to maintain some semblance of speed.
