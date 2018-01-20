@@ -82,23 +82,25 @@ time kotlin ForestKt 305 295 300
 ```
 
 ## Personal Results
-Last tested August 2017 on an i7 7700K, using latest packages in Arch: stable rust (1.19), python 3.6 and pypy 5.8, node 8.3, go 1.8, c++ with both llvm4 and gcc7, haskell with ghc8, elixir 1.5.0, ruby 2.4, kotlin 1.1.3, scala 2.12 (jre-1.8).
+Last tested Jan 2018 on an i7 7700K, using latest packages in Arch: stable rust (1.23), python 3.6.4 and pypy 5.10, node 9.3.0, go 1.9.2, c++ with both llvm 5.0.1 and gcc 7.2.1, haskell with ghc 8.2.2, elixir 1.5.3, ruby 2.5.0, kotlin 1.2,10 scala 2.12.4 (jre-1.8).
 
-- rust: 295ms
-- c++/gcc: 295ms
-- c++/llvm: 310ms
-- kotlin: 670ms
-- rpython: 743ms
-- fortran: 750ms
-- go: 1.4s
-- scala: 2.1s
-- haskell: 2.7s
-- python/pypy3: 3.9s
-- elixir: 5.5s
-- node: 6.7s
-- ruby: 11s
-- python/3: 16s
-- shell: 35s
+Tests using [hyperfine](https://github.com/sharkdp/hyperfine) with warmup and 10 runs (100 runs for the <2s runners). Follows are mean + standard deviation:
+
+- rust: **287.9 ms** ± 2.7 ms
+- c++/gcc: 311.5 ms ± 5.0 ms
+- c++/llvm: 334.1 ms ± 6.1 ms
+- kotlin: 687.5 ms ± 15.8 ms
+- fortran: 769.0 ms ± 3.7 ms
+- rpython: 780.5 ms ± 10.7 ms
+- go: 1.197 s ± **0.137 s**
+- scala: 2.114 s ± 0.013 s
+- haskell: 2.479 s ± 0.014 s
+- python/pypy3: 3.950 s ± 0.021 s
+- elixir: 5.478 s ± 0.032 s
+- node: 6.626 s ± 0.091 s
+- ruby: 10.590 s ± 0.048 s
+- python/3: 15.584 s ± 0.134 s
+- shell: 32.334 s ± 0.036 s
 
 All results are based on the above input data `305 295 300`, where the exponential nature of the problem really highlights the differences between languages.
 
@@ -160,6 +162,8 @@ Relatively straight-forward implementation straightened out by [@jas2701](https:
 
 The explicit filters functions having to be inlined everywhere makes this solution quite verbose, but it is faster than all but the super serious compiled languages.
 
+Huge variance in performance between runs with Go, a standard deviation of ~12% of runspeed. Most languages sit at <1% or at most 2% at the low end (and go is not really there). No idea why this is.
+
 #### C++
 Modern cpp solution is very readable at only a few more lines than the scripting language counterparts. A bit of mental overhead on emplace, awkward iterator sempantics with back inserters, but even that is pretty standard modern cpp really.
 
@@ -186,7 +190,7 @@ Stream implementation using `awk` and `grep` because [@Thhethssmuz](https://gith
 Interestingly the while condition is actually what prints the result to stdout so that serves as a dual "filter out unstable solution" and "end the while loop" at the same time, saving us any extra processing in solve after the while loop.
 
 #### Rust
-Rust impressively ~ties C++ with completely normal code. It all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance.
+Rust impressively beats C++ with completely normal code. It all seems to come down to how many iterator operations you have to do. The original rust solution I saw online was not using `retain` and this saved quite a bit on performance.
 
 Perhaps the least magic implementation of the bunch. It's not as nice or short as python / haskell, but at least you can reason about its performance.
 
