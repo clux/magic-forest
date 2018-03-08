@@ -1,7 +1,7 @@
 #!/bin/bash
 
 build_all() {
-  mkdir -p scalatmp # scala clashes with kotlin
+  mkdir -p scalatmp javatmp # jvm clashes
   go build -o goforest forest.go
   ghc -O3 forest.hs -o ghcforest # creates forest.{hi,o} pointlessly
   g++ -O3 -std=c++14 forest.cpp -o cppforest
@@ -11,6 +11,7 @@ build_all() {
   scalac -d scalatmp/ -opt:_ forest.sc # and more
   kotlinc forest.kt
   cp forest.rpy forest-r.py && rpython --output rpyforest forest-r.py
+  (cp forest.java javatmp/Main.java && cd javatmp && javac Main.java)
 }
 
 run_all() {
@@ -20,6 +21,7 @@ run_all() {
   echo "Kotlin" && time kotlin ForestKt 305 295 300
   echo "RPython" && time ./rpyforest 305 295 300
   echo "Fortran" && time ./fortranforest 305 295 300
+  echo "Java" && cd javatmp && time java Main 305 295 300 && cd -
   echo "Go" && time ./goforest 305 295 300
   echo "Scala" && cd scalatmp && time scala Main 305 295 300 && cd -
   echo "Haskell" && time ./ghcforest 305 295 300

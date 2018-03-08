@@ -79,10 +79,13 @@ time scala Main 305 295 300
 kotlinc forest.kt
 time kotlin ForestKt 305 295 300
 
+# java
+cp forest.java Main.java && javac Main.java
+time java Main 305 295 300
 ```
 
 ## Personal Results
-Last tested Jan 2018 on an i7 7700K, using latest packages in Arch: stable rust (1.23), python 3.6.4 and pypy 5.10, node 9.3.0, go 1.9.2, c++ with both llvm 5.0.1 and gcc 7.2.1, haskell with ghc 8.2.2, elixir 1.5.3, ruby 2.5.0, kotlin 1.2,10 scala 2.12.4 (jre-1.8).
+Last tested Jan 2018 on an i7 7700K, using latest packages in Arch: stable rust (1.23), python 3.6.4 and pypy 5.10, node 9.3.0, go 1.9.2, c++ with both llvm 5.0.1 and gcc 7.2.1, haskell with ghc 8.2.2, elixir 1.5.3, ruby 2.5.0, kotlin 1.2.10 scala 2.12.4 (jre-1.8), java 9.0.4.
 
 Tests using [hyperfine](https://github.com/sharkdp/hyperfine) with warmup and 10 runs (100 runs for the <2s runners). Follows are mean + standard deviation:
 
@@ -90,6 +93,7 @@ Tests using [hyperfine](https://github.com/sharkdp/hyperfine) with warmup and 10
 - c++/gcc: 311.5 ms ± 5.0 ms
 - c++/llvm: 334.1 ms ± 6.1 ms
 - kotlin: 687.5 ms ± 15.8 ms
+- java: 740.8 ms ± 21.8 ms
 - fortran: 769.0 ms ± 3.7 ms
 - rpython: 780.5 ms ± 10.7 ms
 - go: 1.197 s ± **0.137 s**
@@ -156,6 +160,9 @@ Fundamentally equivalent semantically to the Scala solution, but performs 3x bet
 Equality and a print implementation is auto-derived for a `data class` so there's fundamentally little to do. You would think that this makes it a good 1-1 relation with Scala's `case class` statements, but performance wise, I guess not.
 
 There's a lot of very specific object orientation based syntax in the language that weirds me aout a bit, and and the collection constructors feels inconsistent between each other, but the language generally reads very nicely.
+
+#### Java
+Finally ported. It performs well; it's Java. Though even using the more modern syntax of jdk9 it still feels worse than most languages. Bitshift operators to efficiently sort and `distinct()` structs, keywords everywhere, but not too bad. Got this quite a lot shorter than what was [my main inspiration](http://unriskinsight.blogspot.co.uk/2014/06/fast-functional-goats-lions-and-wolves.html) anyway.
 
 #### Go
 Relatively straight-forward implementation straightened out by [@jas2701](https://github.com/jas2701). Converts into set equivalents (maps with comparable keys) near the end rather than using a sort dedup and probably suffers a bit for it.

@@ -7,12 +7,13 @@ RUN pacman -Syu --noconfirm && pacman --noconfirm -S \
   gcc-fortran \
   ghc-static \
   go \
+  jdk9-openjdk \
   kotlin \
   nodejs \
   patch \
   pypy3 \
   python \
-  scala jre8-openjdk \
+  scala jre9-openjdk \
   ruby \
   rust
 
