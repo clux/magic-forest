@@ -1,3 +1,16 @@
+diff --git a/forest.java b/forest.java
+index 160a899..6900a3f 100644
+--- a/forest.java
++++ b/forest.java
+@@ -62,6 +62,7 @@ public final class Main {
+     List<Forest> forests = Collections.singletonList(f);
+     while (!forests.isEmpty() && !forests.stream().anyMatch(Forest::isStable)) {
+       forests = mutate(forests);
++      forests.forEach(s -> System.out.println("Mutation: " + s ));
+     }
+     return forests.stream().filter(Forest::isStable).collect(Collectors.toList());
+   }
+
 diff --git a/forest.cpp b/forest.cpp
 index caf6e2b..57be0ae 100644
 --- a/forest.cpp
