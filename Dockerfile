@@ -2,6 +2,7 @@ FROM base/archlinux:latest
 
 RUN pacman -Syu --noconfirm && pacman --noconfirm -S \
   clang \
+  crystal \
   elixir \
   gcc \
   gcc-fortran \
