@@ -68,6 +68,10 @@ time ./fortranforest 305 295 300
 # ruby
 time ./forest.rb 305 295 300
 
+# crystal
+crystal build forest.cr --release -o crystalforest
+time ./crystalforest 305 295 300
+
 # shell
 time ./forest.sh 305 295 300
 
@@ -85,7 +89,7 @@ time java Main 305 295 300
 ```
 
 ## Personal Results
-Last tested Jan 2018 on an i7 7700K, using latest packages in Arch: stable rust (1.23), python 3.6.4 and pypy 5.10, node 9.3.0, go 1.9.2, c++ with both llvm 5.0.1 and gcc 7.2.1, haskell with ghc 8.2.2, elixir 1.5.3, ruby 2.5.0, kotlin 1.2.10 scala 2.12.4 (jre-1.8), java 9.0.4.
+Last tested Jan 2018 on an i7 7700K, using latest packages in Arch: stable rust (1.23), python 3.6.4 and pypy 5.10, node 9.3.0, go 1.9.2, c++ with both llvm 5.0.1 and gcc 7.2.1, haskell with ghc 8.2.2, elixir 1.5.3, ruby 2.5.0, kotlin 1.2.10 scala 2.12.4 (jre-1.8), java 9.0.4, crystal 0.24.2.
 
 Tests using [hyperfine](https://github.com/sharkdp/hyperfine) with warmup and 10 runs (100 runs for the <2s runners). Follows are mean + standard deviation:
 
@@ -97,6 +101,7 @@ Tests using [hyperfine](https://github.com/sharkdp/hyperfine) with warmup and 10
 - fortran: 769.0 ms ± 3.7 ms
 - rpython: 780.5 ms ± 10.7 ms
 - go: 1.197 s ± **0.137 s**
+- crystal: 1.207 s ±  0.025 s
 - scala: 2.114 s ± 0.013 s
 - haskell: 2.479 s ± 0.014 s
 - python/pypy3: 3.950 s ± 0.021 s
@@ -139,6 +144,11 @@ A JIT was tested in [#11](https://github.com/clux/magic-forest/pull/11), but wit
 Surprisingly performs better than default python even when using the class construct. Python had to migrate away from that to maintain some semblance of speed.
 
 Using `to_s` method as `uniq` condition couldn't manage to make it use the equality operators in a sensible way. A concise `to_s` is therefore much more performant.
+
+#### Crystal
+Basically felt like writing the ruby program, and for a while it performed as one as well.. Thankfully, a magic `def_equals_and_hash @goats, @wolves, @lions` macro managed to define an equals and hash function properly so that `uniq` started performing well. Experimented with implementing my own `<=>` and `==` operators for a while before that unsuccessfully. Not a lot of documentation around this language yet.
+
+Still, performance is up there with with `go` and, it's way less sporadic than `go`. Probably a reasonable language if you know ruby and want a quick speedup.
 
 #### Node
 Lands bang in the middle of the two python implementations. Solid effort for having to implement its own duplicate element filter.
@@ -187,7 +197,7 @@ gcc seems to be consistently around 5% faster than clang.
 #### Fortran
 A solution 3x longer than the dubious second place holder in LOC; `go`. It stays within the rules and implements its own quick sort, and as far as Fortran goes, it's remarkably understandable. It was graciously offered by [@jchildren](https://github.com/jchildren) in [#4](https://github.com/clux/magic-forest/pull/4).
 
-It's up there in the top 3 languages, but it still performs worse than cpp/rust by a factor of two. It's certainly as close to the metal as these languages, so there should perhaps be room for improvement here without going too nuts.
+It's up there in the top 5 languages, but it still performs worse than cpp/rust by a factor of two. It's certainly as close to the metal as these languages, so there should perhaps be room for improvement here without going too nuts.
 
 #### Shell
 Stream implementation using `awk` and `grep` because [@Thhethssmuz](https://github.com/Thhethssmuz) thought it was possible. Turns out it's not too terrible, it's actually pretty amazing that it works as well as it does considering the overhead of forking around 3000 processes on the normal input set.
