@@ -21,7 +21,7 @@ class Forest
   end
 end
 
-def mutate(forests : Array(Forest))
+def mutate(forests : Array(Forest)) : Array(Forest)
   forests.flat_map { |f|
     [
       Forest.new(f.goats - 1, f.wolves - 1, f.lions + 1),
@@ -31,7 +31,7 @@ def mutate(forests : Array(Forest))
   }.select(&.is_valid).uniq
 end
 
-def solve(f : Forest)
+def solve(f : Forest) : Array(Forest)
   forests = [f]
   until forests.empty? || forests.any? &.is_stable
     forests = mutate(forests)
@@ -41,5 +41,4 @@ end
 
 initial = Forest.new(ARGV[0].to_i, ARGV[1].to_i, ARGV[2].to_i)
 puts "Initial: #{initial.inspect}"
-ss = solve(initial)
-ss.each { |s| puts "Solution: #{s.inspect}" }
+solve(initial).each { |s| puts "Solution: #{s.inspect}" }

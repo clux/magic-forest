@@ -150,6 +150,9 @@ Basically felt like writing the ruby program, and for a while it performed as on
 
 Still, performance is up there with with `go` and, it's way less sporadic than `go`. Probably a reasonable language if you know ruby and want a quick speedup.
 
+Type annotations in return types made no difference in performance.
+This language can run both fully interpretted and compiled, though it's about 3-4 times slower at this task intepreted.
+
 #### Node
 Lands bang in the middle of the two python implementations. Solid effort for having to implement its own duplicate element filter.
 
