@@ -8,7 +8,7 @@ RUN pacman -Syu --noconfirm && pacman --noconfirm -S \
   gcc-fortran \
   ghc-static \
   go \
-  jdk9-openjdk \
+  jdk10-openjdk \
   julia \
   kotlin \
   nodejs \
