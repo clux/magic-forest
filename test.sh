@@ -29,6 +29,7 @@ verify_output() {
   [[ $(./forest.sh 55 45 50 | wc -l) == 28866 ]]
   [[ $(./forest.rb 55 45 50 | wc -l) == 28866 ]]
   [[ $(./forest.ex 55 45 50 | wc -l) == 28866 ]]
+  [[ $(./forest.jl 55 45 50 | wc -l) == 28866 ]]
   [[ $(./rpyforest 55 45 50 | wc -l) == 28866 ]]
 }
 

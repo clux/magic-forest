@@ -25,6 +25,7 @@ run_all() {
   echo "Java" && cd javatmp && time java Main 305 295 300 && cd -
   echo "Go" && time ./goforest 305 295 300
   echo "Crystal" && time ./crystalforest 305 295 300
+  echo "Julia" && time ./forest.jl 305 295 300
   echo "Scala" && cd scalatmp && time scala Main 305 295 300 && cd -
   echo "Haskell" && time ./ghcforest 305 295 300
   echo "Python (PYPY3)" && time pypy3 forest.py 305 295 300
