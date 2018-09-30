@@ -13,10 +13,10 @@ index caf6e2b..57be0ae 100644
  }
  
 diff --git a/forest.cr b/forest.cr
-index b947035..5e6bc21 100644
+index fb61adb..ad7387f 100755
 --- a/forest.cr
 +++ b/forest.cr
-@@ -35,6 +35,7 @@ def solve(f : Forest)
+@@ -35,6 +35,7 @@ def solve(f : Forest) : Array(Forest)
    forests = [f]
    until forests.empty? || forests.any? &.is_stable
      forests = mutate(forests)
@@ -101,6 +101,20 @@ index 160a899..6900a3f 100644
      }
      return forests.stream().filter(Forest::isStable).collect(Collectors.toList());
    }
+diff --git a/forest.jl b/forest.jl
+index 6ccf2c3..9a2f65f 100755
+--- a/forest.jl
++++ b/forest.jl
+@@ -27,6 +27,9 @@ function solve(x::Forest)
+   forests = [x]
+   while !isempty(forests) && !any(is_stable, forests)
+      forests = mutate(forests)
++     for f ∈ forests
++       println("Mutated: $f")
++     end
+   end
+   filter(is_stable, forests)
+ end
 diff --git a/forest.js b/forest.js
 index 058b64a..2109c2c 100755
 --- a/forest.js
