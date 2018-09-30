@@ -15,7 +15,7 @@ RUN pacman -Syu --noconfirm && pacman --noconfirm -S \
   patch \
   pypy3 \
   python \
-  scala jre9-openjdk \
+  scala jre10-openjdk \
   ruby \
   rust
 

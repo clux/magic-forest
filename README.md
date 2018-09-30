@@ -155,9 +155,9 @@ Type annotations in return types made no difference in performance.
 This language can run both fully interpretted and compiled, though it's about 3-4 times slower at this task intepreted.
 
 ### Julia
-Really different language. The short implementation doesn't really reflect just how many methods this language has for dealing with mathematical vectors and array, but it's clear that it's got different focuses than what this bench is testing.
+Really interesting and different language. The short implementation doesn't really reflect just how many methods this language has for dealing with mathematical vectors and array, but it's clear that it's got different focuses than what this bench is testing.
 
-Still decent performance out of julia script mode. Tried to run with `-O3`, but didn't make any difference, and the language only appears to have [hard ways to compile binaries](https://github.com/JuliaLang/PackageCompiler.jl) as it stands? Their entire build repl system appears to manage git and a dependency file - and this seems to be [undergoing a revamp](https://www.youtube.com/watch?v=HgFmiT5p0zU).
+Still, we are presented with decent performance out of julia script mode. Tried to run with `-O3`, but didn't make any difference, and the language only appears to have [hard ways to compile binaries](https://github.com/JuliaLang/PackageCompiler.jl) as it stands? Their entire build repl system appears to manage git and a dependency file - and this seems to be [undergoing a revamp](https://www.youtube.com/watch?v=HgFmiT5p0zU).
 
 #### Node
 Lands bang in the middle of the two python implementations. Solid effort for having to implement its own duplicate element filter.
