@@ -106,6 +106,7 @@ Tests using [hyperfine](https://github.com/sharkdp/hyperfine) with warmup and 10
 - haskell: 2.479 s ± 0.014 s
 - python/pypy3: 3.950 s ± 0.021 s
 - elixir: 5.478 s ± 0.032 s
+- julia:  5.974 s ±  0.071 s
 - node: 6.626 s ± 0.091 s
 - ruby: 10.590 s ± 0.048 s
 - python/3: 15.584 s ± 0.134 s
@@ -152,6 +153,11 @@ Still, performance is up there with with `go` and, it's way less sporadic than `
 
 Type annotations in return types made no difference in performance.
 This language can run both fully interpretted and compiled, though it's about 3-4 times slower at this task intepreted.
+
+### Julia
+Really different language. The short implementation doesn't really reflect just how many methods this language has for dealing with mathematical vectors and array, but it's clear that it's got different focuses than what this bench is testing.
+
+Still decent performance out of julia script mode. Tried to run with `-O3`, but didn't make any difference, and the language only appears to have [hard ways to compile binaries](https://github.com/JuliaLang/PackageCompiler.jl) as it stands? Their entire build repl system appears to manage git and a dependency file - and this seems to be [undergoing a revamp](https://www.youtube.com/watch?v=HgFmiT5p0zU).
 
 #### Node
 Lands bang in the middle of the two python implementations. Solid effort for having to implement its own duplicate element filter.

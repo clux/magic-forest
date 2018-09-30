@@ -16,9 +16,9 @@ end
 function mutate(forests)
   next = []
   for f ∈ forests
-    pushfirst!(next, Forest(f.goats - 1, f.wolves - 1, f.lions + 1))
-    pushfirst!(next, Forest(f.goats - 1, f.wolves + 1, f.lions - 1))
-    pushfirst!(next, Forest(f.goats + 1, f.wolves - 1, f.lions - 1))
+    push!(next, Forest(f.goats - 1, f.wolves - 1, f.lions + 1))
+    push!(next, Forest(f.goats - 1, f.wolves + 1, f.lions - 1))
+    push!(next, Forest(f.goats + 1, f.wolves - 1, f.lions - 1))
   end
   unique(filter(is_valid, next))
 end
