@@ -9,6 +9,7 @@ RUN pacman -Syu --noconfirm && pacman --noconfirm -S \
   ghc-static \
   go \
   jdk9-openjdk \
+  julia \
   kotlin \
   nodejs \
   patch \
