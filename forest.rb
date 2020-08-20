@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
-
 class Forest
+  include Comparable
+
   attr_accessor :goats
   attr_accessor :wolves
   attr_accessor :lions
@@ -9,6 +10,18 @@ class Forest
     @goats = goats
     @wolves = wolves
     @lions = lions
+  end
+
+  def <=>(rhs)
+    to_h <=> rhs.to_h
+  end
+
+  def to_h
+    @forest ||= {
+      goats: @goats,
+      lions: @lions,
+      wolves: @wolves
+    }
   end
 
   def to_s
@@ -32,7 +45,7 @@ def mutate(forests)
     xs.push(Forest.new(f.goats + 1, f.wolves - 1, f.lions - 1))
   end
   ys = xs.keep_if {|f| f.is_valid }
-  ys.uniq {|f| f.to_s }
+  ys.uniq {|f| f.to_h }
 end
 
 def solve(forest)
